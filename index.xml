@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>RingoTC&#39;s Blog</title>
+    <link>https://ringotc.github.io/</link>
+    <description>Recent content on RingoTC&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <copyright>&amp;copy; &lt;a href=&#34;https://github.com/RingoTC&#34;&gt;Han Liao&lt;/a&gt; 1998</copyright>
+    <lastBuildDate>Fri, 23 Apr 2021 10:51:44 +0800</lastBuildDate><atom:link href="https://ringotc.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[统计学习方法]EM算法</title>
+      <link>https://ringotc.github.io/posts/em/</link>
+      <pubDate>Fri, 23 Apr 2021 10:51:44 +0800</pubDate>
+      
+      <guid>https://ringotc.github.io/posts/em/</guid>
+      <description>EM算法是对含有隐变量的概率模型进行参数估计的一种方法。在本文，我将参考《统计学习方法》一书，对EM算法的目的、原理以及收敛性进行整理。
+一、EM算法的目的 首先，我们要理解EM算法要解决的问题。在一些参数估计的问题中，很多变量是不可以直接观测的。
+比如，在一所高中，我们需要估计男女生的身高的分布，但我们只有每个人的身高信息，没有他们的性别信息。我们知道，男女生的身高应该是服从两个不同的正态分布，但由于我们无法直接获悉当前样本的性别，因此无法直接使用极大似然估计或者贝叶斯估计对正态分布的均值与方差两个参数进行估计。
+在这个问题中，样本的性别就属于隐变量（Latent Variable）而样本的身高属于观测变量（Observable Variable）。我们令所有的隐变量组成集合$Z$，所有的观测变量组成集合$Y$。
+参考极大似然估计的想法，我们需要使得当前出现的情形是概率最大的，即 $$ \argmax_\theta P(Y|\theta) = \sum_Z P(Z|\theta)P(Y|Z,\theta) \tag{1} $$ 但难点在于，对于公式(1)左边的式子，由于其含有隐变量，我们无法对其进行积分运算。因此，我们需要尝试一种近似的策略。
+二、EM算法的原理 EM算法通过定义$P(Y|\theta)$的近似$Q$函数，再对$Q$函数进行极大化进而使得$P(Y|\theta)$极大（实际上，EM算法并不能实现$P(Y|\theta)$的极大，此处按下不表）。
+所以，EM算法可以分为两个步骤：
+ E步（Exception）：计算$Q(\theta,\theta^{(i)})$ M步（Maximum）：极大化$Q(\theta,\theta^{(i)})$，得到参数$\theta^{(i+1)}$  具体的，$Q$函数是指 完全数据的对数似然函数$\log P(Y,Z|\theta)$关于在给定观测数据$Y$和当前参数$\theta^{(i)}$下对未观测数据$Z$的条件概率分布$P(Z|Y,\theta(i))$的期望，即
+$$ Q(\theta,\theta^{(i)})=E_z[\log P(Y,Z|\theta)|Y,\theta^{(i)}] \tag{2} $$
+一言以蔽之，$Q$函数就是指在当前情况下$\log P(Y,Z|\theta)$的可能性，极大化$Q$函数，就是在极大化$\log P(Y,Z|\theta)$，也就是说，每一次迭代后$\theta$的取值为：
+$$ \theta^{(i+1)}=\argmax_\theta Q(\theta,\theta^{(i)}) \tag{3} $$
+下面，我们严格地来证明极大化$Q$函数近似于极大化$\log P(Y|\theta)$。
+我们令$L(\theta)=\log P(Y|\theta) = \log \sum_Z P(Y,Z|\theta) = \log \left( \sum_Z P(Y|Z,\theta)P(Z|\theta) \right)$（由贝叶斯公式可得）。
+由于直接极大化$L(\theta)$不可行，我们可以把目标近似地替代为，使得每一次参数调整之间的差均是正值 $$ \begin{aligned} L(\theta) - L(\theta^{(i)}) &amp;amp;= \log \left( \sum_Z P(Y|Z,\theta)P(Z|\theta) \right) - \log P(Y|\theta^{(i)}) \</description>
+    </item>
+    
+    <item>
+      <title>朴素贝叶斯方法中的极大似然和极大后验估计</title>
+      <link>https://ringotc.github.io/posts/naivebayes/</link>
+      <pubDate>Fri, 23 Apr 2021 10:46:52 +0800</pubDate>
+      
+      <guid>https://ringotc.github.io/posts/naivebayes/</guid>
+      <description>朴素贝叶斯方法是机器学习中十分经典的一种方法，它通过对联合概率分布$P(X,Y)$进行学习，进而得到后验概率$P(Y=y_k,X=x_k)$。
+朴素贝叶斯算法的核心是进行参数估计，一般的，我们有两种方式去估计参数，分别是极大似然和极大后验估计。本篇博文以二分类问题为例，介绍这两种估计方法。
+一、极大似然估计 MLP 二、极大后验估计 MAP </description>
+    </item>
+    
+    <item>
+      <title>[统计学习方法]奇异值分解</title>
+      <link>https://ringotc.github.io/posts/svd/</link>
+      <pubDate>Tue, 20 Apr 2021 16:25:31 +0800</pubDate>
+      
+      <guid>https://ringotc.github.io/posts/svd/</guid>
+      <description>一、奇异值分解的含义 奇异值分解是指，对于任意的一个$m\times n$阶矩阵$A$，都存在分解 $$A=U\Sigma V^T \tag{1}$$ 其中$U$是$m$阶的正交矩阵、$V$是$n$阶的正交矩阵、$\Sigma$是$m\times n$的对角矩阵，$\Sigma=[\sigma_1,\sigma_2,&amp;hellip;,\sigma_n]$。
+二、证明对于每一个矩阵均存在奇异值分解 这里使用构造性的证明方法。 首先，不妨假设$m&amp;gt;n$，然后我们分别构造$U$、$\Sigma$和$V$。
+第一步：构造$V$和$\Sigma$ 注意到，$A^TA$是一个实对称矩阵，因此$A^TA$一定可以被相似对角化，即：$V^T(A^TA)V=\Lambda$。定义奇异值$\sigma_j=\sqrt{\lambda_j}$，这里定义奇异值为$A^TA$的特征值的根号，可以直观地理解为$A^TA$相当于$A^2$，则$A$的&amp;quot;特征值&amp;quot;应当是根号下的$\lambda_j$。
+对于矩阵$A$，它的秩为$r&amp;lt;n$，有$\sigma_j &amp;gt; 0,(1\leq j\leq r)$，$\sigma_j = 0, r+1 \leq j \leq n$。 则令$V_1=[v_1,v_2,&amp;hellip;,v_r]$和$V_2=[V_{r+1},v_{r+2},&amp;hellip;,v_n]$，其中$v_k$指$A^TA$的特征向量，则有 $$V = [V_1,V_2] \tag{2}$$
+再令 $$\Sigma_1=\text{diag}(\sigma_1,\sigma_2,&amp;hellip;,\sigma_r) \tag{3}$$
+则
+$$ \Sigma = \text{diag}(\Sigma_1,0) $$
+至此，我们就构造出来了$V$和$\Sigma$矩阵，类比于相似对角化$A=Q\Lambda Q^T$，这里的$\Sigma$即$\Lambda$，而$V$和$U$即$Q$。但是对于一个一般的矩阵，并不存在$U=V$，因此，下一步就是去构造$U$。
+第二步：构造矩阵$U$ 首先，令 $$ u_j = \frac{1}{\sigma_j}Av_j \tag{4} $$ $$ U_1 = [u_1,u_2,&amp;hellip;,u_r] \tag{5} $$ 则$AV_1=U_1\Sigma_1$，可证明$U_1$是一个正交矩阵。 再令$U_2$的列向量为$N(A^T)$的标准正交基，以及$U=[U_1,U_2]$，则
+$$ \begin{aligned} U\Sigma V^T &amp;amp;= [U_1 \quad U_2] \begin{bmatrix} \Sigma_1 &amp;amp; 0 \</description>
+    </item>
+    
+    <item>
+      <title>友情链接</title>
+      <link>https://ringotc.github.io/links/</link>
+      <pubDate>Wed, 07 Apr 2021 18:28:15 +0800</pubDate>
+      
+      <guid>https://ringotc.github.io/links/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>实现Vue的核心功能：Virtual DOM 和 数据双向绑定</title>
+      <link>https://ringotc.github.io/posts/tiny-vue/</link>
+      <pubDate>Wed, 07 Apr 2021 15:05:29 +0800</pubDate>
+      
+      <guid>https://ringotc.github.io/posts/tiny-vue/</guid>
+      <description>最近我在重学前端，对Vue的实现方式比较感兴趣。在网络上，有很多实现Vue核心功能的文章，在本文，我也将对Vue的Virtual DOM和数据双向绑定进行实现。
+ 一、vue的运行基础 相信学过Vue的同学都看过这张图片： 在Vue中，最重要的三个组件是：Reactivity Module、Compiler Module、Renderer Module，这三个Module的功能如下：
+ Reactivity Module：使得JavaScript对象的值的更改能够立即被渲染在HTML上。也就是数据的双向绑定。 Compiler Module：将template编译为render函数。 Renderer Module：将render函数转换为HTML元素。 在本文，我将重点关注Reactivity Module和Renderer Module。  在我看来，Vue的核心功能在于维护Virtual DOM（下简称VDOM）和DOM的关系。 VDOM有三个不同类型的信息构成：
+ 标签名 属性，包括方法如onclick等 子节点 这构成了一个JavaScript对象：  let vdom = { tag: &#39;p&#39;, props: { id: &#39;text&#39; }, children:&#39;it is a text&#39; } 这个VDOM与这样的一个标签对应：
+&amp;lt;p id=&amp;quot;text&amp;quot;&amp;gt;it is a text&amp;lt;/p&amp;gt; Vue首先要关注的就是如何把一个VDOM对象转换成一个DOM对象。
+二、VDOM -&amp;gt; DOM 浏览器为我们提供了操作Document的API，例如，我们可以用如下的代码创建一个HTML元素：
+let p = document.createElementByTagName(&#39;p&#39;) 然后将其添加到某个元素（假设为container）下：
+container.appendChild(p) 要实现VDOM到DOM的转换，其实就是把这个过程封装起来。 首先，我们要引入render函数，这个函数接收三个参数（标签名，属性，子节点），并返回一个VDOM对象。
+function h(tag,props,children){ return { tag, props, // object children // array } } 例如：</description>
+    </item>
+    
+  </channel>
+</rss>

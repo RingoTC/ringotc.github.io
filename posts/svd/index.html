@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+
+<title>[统计学习方法]奇异值分解 | RingoTC&#39;s Blog</title>
+
+<link rel="stylesheet" href="https://ringotc.github.io//css/styles.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" 
+integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/zenburn.min.css" crossorigin="anonymous" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<script src="https://ringotc.github.io//js/highlight.js"></script>
+
+
+
+
+
+
+<div class="container">
+    <nav class="navbar level">
+      <div class="navbar-brand">
+          <a class="nav-item" href="https://ringotc.github.io/"><h1 class="title is-3">RingoTC&#39;s Blog</h1></a>
+      </div>           
+      <div class="navbar-menu has-text-centered is-active">
+          <div class="navbar-end is-centered">
+              
+                <a href="https://github.com/RingoTC" rel="me">
+                  <span class="icon">
+                    <i class="fab fa-github"></i>
+                  </span>
+                </a>
+              
+                <a href="https://twitter.com/tcringo" rel="me">
+                  <span class="icon">
+                    <i class="fab fa-twitter"></i>
+                  </span>
+                </a>
+              
+                <a href="https://weibo.com/u/3922864097" rel="me">
+                  <span class="icon">
+                    <i class="fab fa-weibo"></i>
+                  </span>
+                </a>
+              
+           </div>
+      </div>
+    </nav>
+  </div>
+
+<div class="container">
+  <h2 class="subtitle is-6">April 20, 2021</h2>
+  <h1 class="subtitle is-size-4-mobile is-size-3-desktop">[统计学习方法]奇异值分解</h1>
+  <div class="content">
+    <h1 id="一奇异值分解的含义">一、奇异值分解的含义</h1>
+<p>奇异值分解是指，对于任意的一个$m\times n$阶矩阵$A$，都存在分解
+$$A=U\Sigma V^T \tag{1}$$
+其中$U$是$m$阶的正交矩阵、$V$是$n$阶的正交矩阵、$\Sigma$是$m\times n$的对角矩阵，$\Sigma=[\sigma_1,\sigma_2,&hellip;,\sigma_n]$。</p>
+<h1 id="二证明对于每一个矩阵均存在奇异值分解">二、证明对于每一个矩阵均存在奇异值分解</h1>
+<p>这里使用构造性的证明方法。
+首先，不妨假设$m&gt;n$，然后我们分别构造$U$、$\Sigma$和$V$。</p>
+<h2 id="第一步构造v和sigma">第一步：构造$V$和$\Sigma$</h2>
+<p>注意到，$A^TA$是一个实对称矩阵，因此$A^TA$一定可以被相似对角化，即：$V^T(A^TA)V=\Lambda$。定义奇异值$\sigma_j=\sqrt{\lambda_j}$，这里定义奇异值为$A^TA$的特征值的根号，可以直观地理解为$A^TA$相当于$A^2$，则$A$的&quot;特征值&quot;应当是根号下的$\lambda_j$。</p>
+<p>对于矩阵$A$，它的秩为$r&lt;n$，有$\sigma_j &gt; 0,(1\leq j\leq r)$，$\sigma_j = 0, r+1 \leq j \leq n$。
+则令$V_1=[v_1,v_2,&hellip;,v_r]$和$V_2=[V_{r+1},v_{r+2},&hellip;,v_n]$，其中$v_k$指$A^TA$的特征向量，则有
+$$V = [V_1,V_2] \tag{2}$$</p>
+<p>再令
+$$\Sigma_1=\text{diag}(\sigma_1,\sigma_2,&hellip;,\sigma_r) \tag{3}$$</p>
+<p>则</p>
+<p>$$
+\Sigma = \text{diag}(\Sigma_1,0)
+$$</p>
+<p>至此，我们就构造出来了$V$和$\Sigma$矩阵，类比于相似对角化$A=Q\Lambda Q^T$，这里的$\Sigma$即$\Lambda$，而$V$和$U$即$Q$。但是对于一个一般的矩阵，并不存在$U=V$，因此，下一步就是去构造$U$。</p>
+<h2 id="第二步构造矩阵u">第二步：构造矩阵$U$</h2>
+<p>首先，令
+$$
+u_j = \frac{1}{\sigma_j}Av_j \tag{4}
+$$
+$$
+U_1 = [u_1,u_2,&hellip;,u_r] \tag{5}
+$$
+则$AV_1=U_1\Sigma_1$，可证明$U_1$是一个正交矩阵。
+再令$U_2$的列向量为$N(A^T)$的标准正交基，以及$U=[U_1,U_2]$，则</p>
+<p>$$
+\begin{aligned}
+U\Sigma V^T &amp;= [U_1 \quad U_2] \begin{bmatrix}
+\Sigma_1 &amp; 0 \<br>
+0 &amp; 0
+\end{bmatrix}\begin{bmatrix}
+V_1^T \<br>
+V_2^T
+\end{bmatrix} \<br>
+&amp;= U_1\Sigma_1 V_1 \<br>
+&amp;= AV_1V_1^T \<br>
+&amp;= A
+\end{aligned}
+\tag{6}
+$$
+至此，我们就证明了对$m&gt;n$的任意矩阵存在奇异值分解，对$n&gt;m$的矩阵同理。</p>
+<h1 id="三矩阵近似">三、矩阵近似</h1>
+<p>奇异值分解可以看作在Frobenius范数下的矩阵近似，所谓Frobenius范数是指；
+$$
+||A||<em>F= \left( \sum</em>{i=1}^m \sum_{j=1}^n (a_{ij})^2 \right)
+\tag{7}
+$$
+容易证明
+$$||A||_F=(\sigma_1^2+\sigma_2^2+&hellip;+\sigma_n^2)^{1/2} \tag{8}$$</p>
+<p>矩阵近似是指，使用一个低秩的矩阵去近似一个高秩的矩阵。学习过线性代数我们都知道，一个低秩的矩阵所能张成的线性空间的维度是低于高秩矩阵的。矩阵最优近似可以定义为
+$$
+||A-X||<em>F = \min</em>{s \in M} ||A -S||<em>F \tag{9}
+$$
+其中,$r(A)=r$,$M$为所有秩不超过$r$的矩阵的集合。
+可以证明，对任意矩阵$A=U\Sigma V^T$有
+$$
+\begin{aligned}
+||A-X||<em>F &amp;= \min</em>{S\in M} ||A-S||
+&amp;= \left( \sigma</em>{k+1}^2 + \sigma_{k+2}^2 + &hellip; + \sigma_n^2 \right) \tag{10}
+\end{aligned}
+$$
+由公式(8)可知，$||A||_F=(\sigma_1^2+\sigma_2^2+&hellip;+\sigma_n^2)^{1/2}$，也就是说，使用一个低秩矩阵$X$其秩为$k$去近似一个高秩的$n$阶矩阵$A$，其误差的下界是$\mathcal{O}\left( \sigma_{k+1}^2 + \sigma_{k+2}^2 + &hellip; + \sigma_n^2 \right)$。从这里可以看出，越大的奇异值对应越丰富的信息，越小的奇异值对应越少的信息。</p>
+<p>公式(10)的具体证明过程如下：
+假设秩为n的矩阵$A$，其在秩为$k$下最优近似为$A'$。
+$A'=Q\Omega P^T$，其中$\Omega=\text{diag}(\omega_1,&hellip;,\omega_k,0,&hellip;,0)$。令$B=Q^TAP$则有：
+$$
+\begin{aligned}
+||A-A'||<em>F &amp;= ||Q(B-\Omega)P^T|| \<br>
+&amp;= ||B</em>{11} - \Omega_k||<em>F^2 + ||B</em>{12}||<em>F^2 + ||B</em>{21}||<em>F^2 + ||B</em>{22}||<em>F^2 \tag{11}
+\end{aligned}
+$$
+由于$A'$是$A$的最优近似，令
+$$
+Y = Q \begin{bmatrix}
+B</em>{11} &amp; B_{12} \<br>
+0 &amp; 0
+\end{bmatrix} P^T \tag{11}
+$$
+则
+$$
+||A-Y||_F^2 = ||B_{21}||_F^2 + ||B_{22}||_F^2 &lt; ||A-A'||_F^2 \tag{12}
+$$
+则公式(12)必定不能成立，因此，$B_{12}=0$，同理可得$B_{21}=0$。
+再证$B_{11}=\Omega_k$，令
+$$
+Z = Q \begin{bmatrix}
+B_{11} &amp; 0 \<br>
+0 &amp; 0
+\end{bmatrix} P^T \tag{13}
+$$
+则
+$$
+||A-Z||_F^2 = ||B_{22}||_F^2 \leq ||B_11 - \Omega_k||_F^2 +||B_{22}||_F^2 = ||A-X||_F^2 \tag{14}
+$$
+则$||B_{11}-\Omega_k||_F^2=0$，即$B_{11}=\Omega_k$。对$B_{22}$有奇异值分解$B_{22}=U_1\Lambda V_1^T$，则：
+$$
+||A-X||_F = ||B_{22}||_F = ||\Lambda||_F \geq  \left( \sigma_{k+1}^2 + \sigma_{k+2}^2 + &hellip; + \sigma_n^2 \right) \tag{15}
+$$
+公式(10)得证。</p>
+<h1 id="四奇异值分解的计算">四、奇异值分解的计算</h1>
+<p>在第二节，已经介绍了奇异值分解的构造，这一节我将使用具体的矩阵来介绍奇异值分解的计算。
+给定矩阵
+$$
+A = \begin{bmatrix}
+1 &amp; 2 \<br>
+2 &amp; 2 \<br>
+0 &amp; 0
+\end{bmatrix} \tag{16}
+$$</p>
+<h2 id="第一步求矩阵ata的特征值与特征向量">第一步：求矩阵$A^TA$的特征值与特征向量</h2>
+<p>$$
+A^TA = \begin{bmatrix}
+5 &amp; 5 \<br>
+5 &amp; 5
+\end{bmatrix} \tag{17}
+$$
+其特征值和特征向量为
+$$\lambda_1=10 \quad v_1=\begin{bmatrix}
+\frac{1}{\sqrt{2}} \ \frac{1}{\sqrt{2}}
+\end{bmatrix}$$
+$$\lambda_1=0 \quad v_2=\begin{bmatrix}
+\frac{1}{\sqrt{2}} \ -\frac{1}{\sqrt{2}}
+\end{bmatrix}$$</p>
+<h2 id="第二步求正交矩阵v">第二步：求正交矩阵$V$</h2>
+<p>由第一步得到的特征向量可得$V$
+$$
+V = \begin{bmatrix}
+\frac{1}{\sqrt{2}} &amp; \frac{1}{\sqrt{2}} \<br>
+\frac{1}{\sqrt{2}} &amp; -\frac{1}{\sqrt{2}}
+\end{bmatrix}
+$$</p>
+<h2 id="第三步求对角矩阵sigma">第三步：求对角矩阵$\Sigma$</h2>
+<p>由第一步求得的特征值可得，奇异值为$\sigma_1=\sqrt{\lambda_1}=\sqrt{10}$和$\sigma_2 = \sqrt{\lambda_2} = 0$，需要注意的是，这里对特征值由大到小进行排列。
+根据奇异值可得对角矩阵
+$$
+\Sigma = \begin{bmatrix}
+\sqrt{10} &amp; 0 \<br>
+0 &amp; 0 \<br>
+0 &amp; 0
+\end{bmatrix}
+$$
+可以看到，这里的对角矩阵并非方阵，这是因为最后一行加入了零行向量，以保证$\Sigma$可以和$U$、$V$进行矩阵乘法。</p>
+<h2 id="第四步求正交矩阵u">第四步：求正交矩阵$U$</h2>
+<p>由第三步得到的奇异值，可以计算
+$u_1=\dfrac{1}{\sigma_1}A_{v_1}=\begin{bmatrix}
+\dfrac{1}{\sqrt{5}} &amp; \dfrac{2}{\sqrt{5}} &amp; 0
+\end{bmatrix}^T$
+而$u_2,u_3$是$N(A^T)$的标准正交基，即$A^Tx=0$的基础解系。
+计算得到
+$$
+U = \begin{bmatrix}
+\dfrac{1}{\sqrt{5}} &amp; -\dfrac{2}{\sqrt{5}} &amp; 0 \<br>
+\dfrac{2}{\sqrt{5}} &amp; \dfrac{1}{\sqrt{5}} &amp; 0 \<br>
+0 &amp; 0 &amp; 1
+\end{bmatrix}
+$$
+由以上四步，我们可以得到矩阵$A$的奇异值分解为
+$$
+A = U\Sigma V^T = \begin{bmatrix}
+\dfrac{1}{\sqrt{5}} &amp; -\dfrac{2}{\sqrt{5}} &amp; 0 \<br>
+\dfrac{2}{\sqrt{5}} &amp; \dfrac{1}{\sqrt{5}} &amp; 0 \<br>
+0 &amp; 0 &amp; 1
+\end{bmatrix}\begin{bmatrix}
+\sqrt{10} &amp; 0 \<br>
+0 &amp; 0 \<br>
+0 &amp; 0
+\end{bmatrix}\begin{bmatrix}
+\frac{1}{\sqrt{2}} &amp; \frac{1}{\sqrt{2}} \<br>
+\frac{1}{\sqrt{2}} &amp; -\frac{1}{\sqrt{2}}
+\end{bmatrix}
+$$</p>
+<h1 id="五奇异值分解的几何理解">五、奇异值分解的几何理解</h1>
+<p>我们现在已经知道$A=U\Sigma V^T$对于任意矩阵均成立，实际上，$U、V^T$作为正交矩阵，在线性变换的意义上即旋转变换，而$\Sigma$作为对角矩阵即伸缩变换。这提示我们，所有的线性变换均可以分解为旋转、伸缩、旋转。</p>
+
+  </div>
+</div>
+<div class="container has-text-centered">
+    
+</div>
+
+<div class="container has-text-centered">
+  
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      (function() {
+          
+          
+          if (window.location.hostname == "localhost")
+              return;
+      
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          var disqus_shortname = 'han-liao';
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+  
+</div>
+<section class="section">
+  <div class="container has-text-centered">
+    <p>&copy; <a href="https://github.com/RingoTC">Han Liao</a> 1998</p>
+  </div>
+</section>
+
+

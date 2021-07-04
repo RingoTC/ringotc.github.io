@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+
+<title>[统计学习方法]EM算法 | RingoTC&#39;s Blog</title>
+
+<link rel="stylesheet" href="https://ringotc.github.io//css/styles.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" 
+integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/zenburn.min.css" crossorigin="anonymous" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<script src="https://ringotc.github.io//js/highlight.js"></script>
+
+
+
+
+
+
+<div class="container">
+    <nav class="navbar level">
+      <div class="navbar-brand">
+          <a class="nav-item" href="https://ringotc.github.io/"><h1 class="title is-3">RingoTC&#39;s Blog</h1></a>
+      </div>           
+      <div class="navbar-menu has-text-centered is-active">
+          <div class="navbar-end is-centered">
+              
+                <a href="https://github.com/RingoTC" rel="me">
+                  <span class="icon">
+                    <i class="fab fa-github"></i>
+                  </span>
+                </a>
+              
+                <a href="https://twitter.com/tcringo" rel="me">
+                  <span class="icon">
+                    <i class="fab fa-twitter"></i>
+                  </span>
+                </a>
+              
+                <a href="https://weibo.com/u/3922864097" rel="me">
+                  <span class="icon">
+                    <i class="fab fa-weibo"></i>
+                  </span>
+                </a>
+              
+           </div>
+      </div>
+    </nav>
+  </div>
+
+<div class="container">
+  <h2 class="subtitle is-6">April 23, 2021</h2>
+  <h1 class="subtitle is-size-4-mobile is-size-3-desktop">[统计学习方法]EM算法</h1>
+  <div class="content">
+    <p>EM算法是对含有隐变量的概率模型进行参数估计的一种方法。在本文，我将参考《统计学习方法》一书，对EM算法的目的、原理以及收敛性进行整理。</p>
+<h1 id="一em算法的目的">一、EM算法的目的</h1>
+<p>首先，我们要理解EM算法要解决的问题。在一些参数估计的问题中，很多变量是不可以直接观测的。</p>
+<p>比如，在一所高中，我们需要估计男女生的身高的分布，但我们只有每个人的身高信息，没有他们的性别信息。我们知道，男女生的身高应该是服从两个不同的正态分布，但由于我们无法直接获悉当前样本的性别，因此无法直接使用极大似然估计或者贝叶斯估计对正态分布的均值与方差两个参数进行估计。</p>
+<p>在这个问题中，样本的性别就属于隐变量（Latent Variable）而样本的身高属于观测变量（Observable Variable）。我们令所有的隐变量组成集合$Z$，所有的观测变量组成集合$Y$。</p>
+<p>参考极大似然估计的想法，我们需要使得当前出现的情形是概率最大的，即
+$$
+\argmax_\theta P(Y|\theta) = \sum_Z P(Z|\theta)P(Y|Z,\theta) \tag{1}
+$$
+但难点在于，对于公式(1)左边的式子，由于其含有隐变量，我们无法对其进行积分运算。因此，我们需要尝试一种近似的策略。</p>
+<h1 id="二em算法的原理">二、EM算法的原理</h1>
+<p>EM算法通过定义$P(Y|\theta)$的近似$Q$函数，再对$Q$函数进行极大化进而使得$P(Y|\theta)$极大（实际上，EM算法并不能实现$P(Y|\theta)$的极大，此处按下不表）。</p>
+<p>所以，EM算法可以分为两个步骤：</p>
+<ul>
+<li>E步（Exception）：计算$Q(\theta,\theta^{(i)})$</li>
+<li>M步（Maximum）：极大化$Q(\theta,\theta^{(i)})$，得到参数$\theta^{(i+1)}$</li>
+</ul>
+<p>具体的，$Q$函数是指 <strong>完全数据的对数似然函数$\log P(Y,Z|\theta)$关于在给定观测数据$Y$和当前参数$\theta^{(i)}$下对未观测数据$Z$的条件概率分布$P(Z|Y,\theta(i))$的期望，即</strong></p>
+<p>$$
+Q(\theta,\theta^{(i)})=E_z[\log P(Y,Z|\theta)|Y,\theta^{(i)}] \tag{2}
+$$</p>
+<p>一言以蔽之，$Q$函数就是指在当前情况下$\log P(Y,Z|\theta)$的可能性，极大化$Q$函数，就是在极大化$\log P(Y,Z|\theta)$，也就是说，每一次迭代后$\theta$的取值为：</p>
+<p>$$
+\theta^{(i+1)}=\argmax_\theta Q(\theta,\theta^{(i)}) \tag{3}
+$$</p>
+<p>下面，我们严格地来证明极大化$Q$函数近似于极大化$\log P(Y|\theta)$。</p>
+<p>我们令$L(\theta)=\log P(Y|\theta) = \log \sum_Z P(Y,Z|\theta) = \log \left( \sum_Z P(Y|Z,\theta)P(Z|\theta) \right)$（由贝叶斯公式可得）。</p>
+<p>由于直接极大化$L(\theta)$不可行，我们可以把目标近似地替代为，使得每一次参数调整之间的差均是正值
+$$
+\begin{aligned}
+L(\theta) - L(\theta^{(i)}) &amp;= \log \left( \sum_Z P(Y|Z,\theta)P(Z|\theta) \right) - \log P(Y|\theta^{(i)}) \<br>
+&amp;= \log \left( \sum_Z P(Z|Y,\theta^{(i)}) \dfrac{P(Y|Z,\theta)P(Z|\theta)}{P(Z|Y,\theta^{(i)})}\right) - \log P(Y|\theta^{(i)}) \<br>
+&amp;\geq \sum_Z P(Z|Y,\theta^{(i)}) \log \dfrac{P(Y|Z,\theta)P(Z|\theta)}{P(Z|Y,\theta^{(i)})P(Y|\theta^{(i)})} \tag{4}
+\end{aligned}
+$$
+(使用Jesson不等式)</p>
+<p>从公式(4)中可以得到$L(\theta) \geq \sum_Z P(Z|Y,\theta^{(i)}) \log \dfrac{P(Y|Z,\theta)P(Z|\theta)}{P(Z|Y,\theta^{(i)})P(Y|\theta^{(i)})} + L(\theta^{(i)})$，则令$B(\theta,\theta^{(i)})=\sum_Z P(Z|Y,\theta^{(i)}) \log \dfrac{P(Y|Z,\theta)P(Z|\theta)}{P(Z|Y,\theta^{(i)})P(Y|\theta^{(i)})}$。</p>
+<p>则极大化$L(\theta)$的目标转换为极大化$B(\theta,\theta^{(i)})$，也就是提升$L(\theta)$的下界，即
+$$
+\begin{aligned}
+\theta^{(i+1)} &amp;= \argmax_{\theta} B(\theta,\theta^{(i)}) \<br>
+&amp;= \argmax_\theta \left( L(\theta^{(i)}) + \sum_Z P(Z|Y,\theta^{(i)}) \log \dfrac{P(Y|Z,\theta)P(Z|\theta)}{P(Z|Y,\theta^{(i)})P(Y|\theta^{(i)})} \right) \<br>
+&amp;= \argmax_\theta \left( \sum_Z P(Z|Y,\theta^{(i)}) \log P(Y|Z,\theta)P(Z|\theta)  \right) \<br>
+&amp;= \argmax_\theta \left( \sum_Z P(Z|Y,\theta^{(i)}) \log P(Y,Z|\theta) \right) \<br>
+&amp;= \argmax Q(\theta,\theta^{(i)})
+\end{aligned} \tag{5}
+$$</p>
+<p>也就是说，极大化$Q$函数实际上是在极大化$B$函数。</p>
+<h1 id="三em算法的收敛性">三、EM算法的收敛性</h1>
+<p>显然的，EM算法的每一次迭代都会使得$Q$函数更大，并且$Q$函数是有上界的。根据单调有界原理，EM算法一定是收敛的。但EM算法执行结束时，取得的参数$\theta$并不一定是最优参数。这是因为，我们实际上是在最大化某个下界，此下界与真实值之间会存在差距。</p>
+
+  </div>
+</div>
+<div class="container has-text-centered">
+    
+</div>
+
+<div class="container has-text-centered">
+  
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      (function() {
+          
+          
+          if (window.location.hostname == "localhost")
+              return;
+      
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          var disqus_shortname = 'han-liao';
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+  
+</div>
+<section class="section">
+  <div class="container has-text-centered">
+    <p>&copy; <a href="https://github.com/RingoTC">Han Liao</a> 1998</p>
+  </div>
+</section>
+
+

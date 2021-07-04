@@ -1,0 +1,189 @@
+
+<div class="container">
+  <!DOCTYPE html>
+<html lang="zh-cn">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+
+<title>Categories | RingoTC&#39;s Blog</title>
+
+<link rel="stylesheet" href="https://ringotc.github.io//css/styles.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" 
+integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/zenburn.min.css" crossorigin="anonymous" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<script src="https://ringotc.github.io//js/highlight.js"></script>
+
+
+
+
+
+
+  <div class="container">
+    <nav class="navbar level">
+      <div class="navbar-brand">
+          <a class="nav-item" href="https://ringotc.github.io/"><h1 class="title is-3">RingoTC&#39;s Blog</h1></a>
+      </div>           
+      <div class="navbar-menu has-text-centered is-active">
+          <div class="navbar-end is-centered">
+              
+                <a href="https://github.com/RingoTC" rel="me">
+                  <span class="icon">
+                    <i class="fab fa-github"></i>
+                  </span>
+                </a>
+              
+                <a href="https://twitter.com/tcringo" rel="me">
+                  <span class="icon">
+                    <i class="fab fa-twitter"></i>
+                  </span>
+                </a>
+              
+                <a href="https://weibo.com/u/3922864097" rel="me">
+                  <span class="icon">
+                    <i class="fab fa-weibo"></i>
+                  </span>
+                </a>
+              
+           </div>
+      </div>
+    </nav>
+  </div>
+
+  <main class="container">
+      
+      
+      <h1 class="title is-3">2021</h1>
+      
+      <article class="columns">
+        <div class="column is-2">
+          <h6 class="is-inline" style="white-space: nowrap">Apr 23</h2>
+        </div>
+        <div class="column">
+          <h2 class="subtitle is-inline is-size-4-mobile is-size-3-desktop"><a href="https://ringotc.github.io/posts/em/">[统计学习方法]EM算法</a></h1>
+          <div class="content is-hidden-mobile">
+            EM算法是对含有隐变量的概率模型进行参数估计的一种方法。在本文，我将参考《统计学习方法》一书，对EM算法的目的、原理以及收敛性进行整理。
+一、EM算法的目的 首先，我们要理解EM算法要解决的问题。在一些参数估计的问题中，很多变量是不可以直接观测的。
+比如，在一所高中，我们需要估计男女生的身高的分布，但我们只有每个人的身高信息，没有他们的性别信息。我们知道，男女生的身高应该是服从两个不同的正态分布，但由于我们无法直接获悉当前样本的性别，因此无法直接使用极大似然估计或者贝叶斯估计对正态分布的均值与方差两个参数进行估计。
+在这个问题中，样本的性别就属于隐变量（Latent Variable）而样本的身高属于观测变量（Observable Variable）。我们令所有的隐变量组成集合$Z$，所有的观测变量组成集合$Y$。
+参考极大似然估计的想法，我们需要使得当前出现的情形是概率最大的，即 $$ …
+            
+            <br>
+            <a class="button is-marginless is-paddingless" href="https://ringotc.github.io/posts/em/">
+            <span class="icon-link is-small" style="line-height: 100%">
+                <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+              </span>
+              <p style="padding:0 5px"></p>more</p>
+            </a>
+            
+          </div>
+      </article>
+      
+      <article class="columns">
+        <div class="column is-2">
+          <h6 class="is-inline" style="white-space: nowrap">Apr 23</h2>
+        </div>
+        <div class="column">
+          <h2 class="subtitle is-inline is-size-4-mobile is-size-3-desktop"><a href="https://ringotc.github.io/posts/naivebayes/">朴素贝叶斯方法中的极大似然和极大后验估计</a></h1>
+          <div class="content is-hidden-mobile">
+            朴素贝叶斯方法是机器学习中十分经典的一种方法，它通过对联合概率分布$P(X,Y)$进行学习，进而得到后验概率$P(Y=y_k,X=x_k)$。
+朴素贝叶斯算法的核心是进行参数估计，一般的，我们有两种方式去估计参数，分别是极大似然和极大后验估计。本篇博文以二分类问题为例，介绍这两种估计方法。
+一、极大似然估计 MLP 二、极大后验估计 MAP 
+            
+          </div>
+      </article>
+      
+      <article class="columns">
+        <div class="column is-2">
+          <h6 class="is-inline" style="white-space: nowrap">Apr 20</h2>
+        </div>
+        <div class="column">
+          <h2 class="subtitle is-inline is-size-4-mobile is-size-3-desktop"><a href="https://ringotc.github.io/posts/svd/">[统计学习方法]奇异值分解</a></h1>
+          <div class="content is-hidden-mobile">
+            一、奇异值分解的含义 奇异值分解是指，对于任意的一个$m\times n$阶矩阵$A$，都存在分解 $$A=U\Sigma V^T \tag{1}$$ 其中$U$是$m$阶的正交矩阵、$V$是$n$阶的正交矩阵、$\Sigma$是$m\times n$的对角矩阵，$\Sigma=[\sigma_1,\sigma_2,&hellip;,\sigma_n]$。
+二、证明对于每一个矩阵均存在奇异值分解 这里使用构造性的证明方法。 首先，不妨假设$m&gt;n$，然后我们分别构造$U$、$\Sigma$和$V$。
+第一步：构造$V$和$\Sigma$ 注意到，$A^TA$是一个实对称矩阵，因此$A^TA$一定可以被相似对角化，即：$V^T(A^TA)V=\Lambda$。定义奇异值$\sigma_j=\sqrt{\lambda_j}$，这里定义奇异值为$A^TA$的特征值的根号，可以直观地理解 …
+            
+            <br>
+            <a class="button is-marginless is-paddingless" href="https://ringotc.github.io/posts/svd/">
+            <span class="icon-link is-small" style="line-height: 100%">
+                <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+              </span>
+              <p style="padding:0 5px"></p>more</p>
+            </a>
+            
+          </div>
+      </article>
+      
+      <article class="columns">
+        <div class="column is-2">
+          <h6 class="is-inline" style="white-space: nowrap">Apr 7</h2>
+        </div>
+        <div class="column">
+          <h2 class="subtitle is-inline is-size-4-mobile is-size-3-desktop"><a href="https://ringotc.github.io/posts/tiny-vue/">实现Vue的核心功能：Virtual DOM 和 数据双向绑定</a></h1>
+          <div class="content is-hidden-mobile">
+            最近我在重学前端，对Vue的实现方式比较感兴趣。在网络上，有很多实现Vue核心功能的文章，在本文，我也将对Vue的Virtual DOM和数据双向绑定进行实现。
+ 一、vue的运行基础 相信学过Vue的同学都看过这张图片： 在Vue中，最重要的三个组件是：Reactivity Module、Compiler Module、Renderer Module，这三个Module的功能如下：
+ Reactivity Module：使得JavaScript对象的值的更改能够立即被渲染在HTML上。也就是数据的双向绑定。 Compiler Module：将template编译为render函数。 Renderer Module：将render函数转换为HTML元素。 在本文，我将重点关注Reactivity Module和Renderer Module。  在我看来，Vue的核心功能在于维 …
+            
+            <br>
+            <a class="button is-marginless is-paddingless" href="https://ringotc.github.io/posts/tiny-vue/">
+            <span class="icon-link is-small" style="line-height: 100%">
+                <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+              </span>
+              <p style="padding:0 5px"></p>more</p>
+            </a>
+            
+          </div>
+      </article>
+      
+      
+      
+  </main>
+  <section class="section">
+  <div class="container">
+    <nav class="level is-mobile">
+      <div class="level-left">
+        <div class="level-item">
+          
+          <a class="button is-rounded" disabled>
+            <span class="icon is-small is-marginless">
+              <i class="fa fa-angle-left"></i>
+            </span>
+            Newer
+          </a>
+          
+        </div>
+      </div>
+      <div class="level-right is-marginless">
+        <div class="level-item">
+          
+          <a class="button is-rounded" disabled>
+            Older
+            <span class="icon is-small is-marginless">
+              <i class="fa fa-angle-right"></i>
+            </span>
+          </a>
+          
+        </div>
+      </div>
+    </nav>
+  </div>
+</section>
+
+  <section class="section">
+  <div class="container has-text-centered">
+    <p>&copy; <a href="https://github.com/RingoTC">Han Liao</a> 1998</p>
+  </div>
+</section>
+
+
+</div>
