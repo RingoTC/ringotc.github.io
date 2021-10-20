@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on RingoTC&#39;s Blog</title>
+    <link>https://ringotc.github.io/tags/</link>
+    <description>Recent content in Tags on RingoTC&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <copyright>&amp;copy; &lt;a href=&#34;https://github.com/RingoTC&#34;&gt;Han Liao&lt;/a&gt; 1998</copyright><atom:link href="https://ringotc.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+  </channel>
+</rss>

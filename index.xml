@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>RingoTC&#39;s Blog</title>
+    <link>https://ringotc.github.io/</link>
+    <description>Recent content on RingoTC&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <copyright>&amp;copy; &lt;a href=&#34;https://github.com/RingoTC&#34;&gt;Han Liao&lt;/a&gt; 1998</copyright>
+    <lastBuildDate>Wed, 20 Oct 2021 16:41:00 +0800</lastBuildDate><atom:link href="https://ringotc.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[Paper I read] Knowledge Tracing with Sequential Key-Value Memory Networks</title>
+      <link>https://ringotc.github.io/posts/kt-skvmn/</link>
+      <pubDate>Wed, 20 Oct 2021 16:41:00 +0800</pubDate>
+      
+      <guid>https://ringotc.github.io/posts/kt-skvmn/</guid>
+      <description>motivation 这篇文章主要解决 DKT 和 DKVMN 两个模型的问题：
+ DKT 无法给出特定概念上的掌握程度 无法捕获长期的信息 DKVMN 的 write process 不够好  contribution  在所有数据集上都超越了 DKVMN 和 DKT  methodology  使用 LSTM 建模长期的信息 使用 Hop-LSTM 建模依赖性 [?] 修改了 DKVMN 的 write process  experiment  对比实验 ROC 曲线图  </description>
+    </item>
+    
+    <item>
+      <title>友情链接</title>
+      <link>https://ringotc.github.io/links/</link>
+      <pubDate>Wed, 07 Apr 2021 18:28:15 +0800</pubDate>
+      
+      <guid>https://ringotc.github.io/links/</guid>
+      <description> Mogic 上海交通大学博士生，研究方向：可解释性AI
+  Gee Law 研究方向：密码学
+  Lazy_V&amp;rsquo;s Blog 研究方向：游戏开发
+  欢迎邮件 or 在下方留言添加你的站点
+ </description>
+    </item>
+    
+  </channel>
+</rss>

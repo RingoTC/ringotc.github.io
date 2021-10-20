@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on RingoTC&#39;s Blog</title>
+    <link>https://ringotc.github.io/posts/</link>
+    <description>Recent content in Posts on RingoTC&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <copyright>&amp;copy; &lt;a href=&#34;https://github.com/RingoTC&#34;&gt;Han Liao&lt;/a&gt; 1998</copyright>
+    <lastBuildDate>Wed, 20 Oct 2021 16:41:00 +0800</lastBuildDate><atom:link href="https://ringotc.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[Paper I read] Knowledge Tracing with Sequential Key-Value Memory Networks</title>
+      <link>https://ringotc.github.io/posts/kt-skvmn/</link>
+      <pubDate>Wed, 20 Oct 2021 16:41:00 +0800</pubDate>
+      
+      <guid>https://ringotc.github.io/posts/kt-skvmn/</guid>
+      <description>motivation 这篇文章主要解决 DKT 和 DKVMN 两个模型的问题：
+ DKT 无法给出特定概念上的掌握程度 无法捕获长期的信息 DKVMN 的 write process 不够好  contribution  在所有数据集上都超越了 DKVMN 和 DKT  methodology  使用 LSTM 建模长期的信息 使用 Hop-LSTM 建模依赖性 [?] 修改了 DKVMN 的 write process  experiment  对比实验 ROC 曲线图  </description>
+    </item>
+    
+  </channel>
+</rss>
