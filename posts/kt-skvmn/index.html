@@ -6,7 +6,28 @@
 
 
 
-<title>[Paper I read] Knowledge Tracing with Sequential Key-Value Memory Networks | RingoTC&#39;s Blog</title>
+<title>[论文笔记] Knowledge Tracing with Sequential Key-Value Memory Networks | RingoTC&#39;s Blog</title>
+
+<script>
+    MathJax = {
+      tex: {
+        inlineMath: [["$", "$"]],
+      },
+      displayMath: [
+        ["$$", "$$"],
+        ["\[\[", "\]\]"],
+      ],
+      svg: {
+        fontCache: "global",
+      },
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script
+    id="MathJax-script"
+    async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+  ></script>
 
 <link rel="stylesheet" href="https://ringotc.github.io//css/styles.css">
 
@@ -14,7 +35,6 @@
 integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
 <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/zenburn.min.css" crossorigin="anonymous" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
@@ -65,10 +85,10 @@ integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbi
 
 <div class="container">
   <h2 class="subtitle is-6">October 20, 2021</h2>
-  <h1 class="subtitle is-size-4-mobile is-size-3-desktop">[Paper I read] Knowledge Tracing with Sequential Key-Value Memory Networks</h1>
+  <h1 class="subtitle is-size-4-mobile is-size-3-desktop">[论文笔记] Knowledge Tracing with Sequential Key-Value Memory Networks</h1>
   <div class="content">
     <h2 id="motivation">motivation</h2>
-<p>这篇文章主要解决 DKT 和 DKVMN 两个模型的问题：</p>
+<p>这篇文章主要解决 DKT 和 DKVMN 两个模型的问题：</p>
 <ul>
 <li>DKT 无法给出特定概念上的掌握程度</li>
 <li>无法捕获长期的信息</li>
