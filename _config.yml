@@ -16,7 +16,7 @@ timezone: America/Los_Angeles
 
 title: ringotc's Blog # the main title
 
-tagline: A text-focused Jekyll theme # it will display as the sub-title
+tagline: A Full-Stack, Machine Learning Engineer, and Natural Language Processing Researcher. # it will display as the sub-title
 
 description: >- # used by seo meta and the atom feed
   A Full-Stack, Machine Learning Engineer, and Natural Language Processing Researcher. I write about Web Development, Machine Learning, and Natural Language Processing.
@@ -32,8 +32,8 @@ github:
 social:
   # Change to your full name.
   # It will be displayed as the default author of the posts and the copyright owner in the Footer
-  name: your_full_name
-  email: example@domain.com # change to your email address
+  name: ringotc
+  email: hanliao1998@gmail.com # change to your email address
   links:
     # The first element serves as the copyright owner's link
     - https://www.linkedin.com/in/han-liao-33190325a/ # change to your twitter homepage
