@@ -88,7 +88,7 @@
 
 .post-content dl,
 .post-content ol,
-.post-content p,
+/* .post-content p, */
 .post-content figure,
 .post-content ul {
     margin-bottom: var(--content-gap);
@@ -124,8 +124,8 @@
     padding-inline-start: 10px;
 }
 
-.post-content dd ~ dd,
-.post-content dt ~ dt {
+.post-content dd~dd,
+.post-content dt~dt {
     margin-top: 10px;
 }
 
@@ -160,7 +160,7 @@
     direction: ltr;
 }
 
-.post-content li > .highlight {
+.post-content li>.highlight {
     margin-inline-end: 0;
 }
 
@@ -210,9 +210,11 @@
 }
 
 .post-content blockquote {
-    margin: 20px 0;
-    padding: 0 14px;
-    border-inline-start: 3px solid var(--primary);
+    display: flex;
+    border-radius: 4px;
+    border: 1px solid transparent;
+    background: rgb(237, 243, 236);
+    padding: 12px 20px 12px 12px;
 }
 
 .post-content hr {
@@ -239,14 +241,14 @@
     text-align: center;
 }
 
-.post-content figure > figcaption {
+.post-content figure>figcaption {
     color: var(--primary);
     font-size: 16px;
     font-weight: bold;
     margin: 8px 0 16px;
 }
 
-.post-content figure > figcaption > p {
+.post-content figure>figcaption>p {
     color: var(--secondary);
     font-size: 14px;
     font-weight: normal;
