@@ -121,6 +121,24 @@ markup:
     # lineNos: true
     # style: monokai
 
+markup:
+  goldmark:
+    extensions:
+      passthrough:
+        delimiters:
+          block:
+          - - \[
+            - \]
+          - - $$
+            - $$
+          inline:
+          - - \(
+            - \)
+          - - $
+            - $
+        enable: true
+
+
 services:
   disqus:
     shortname: ringotc-blog-here

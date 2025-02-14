@@ -215,6 +215,7 @@
     border: 1px solid transparent;
     background: rgb(237, 243, 236);
     padding: 12px 20px 12px 12px;
+    margin: 10px 0;
 }
 
 .post-content hr {
