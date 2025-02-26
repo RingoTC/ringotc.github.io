@@ -67,3 +67,20 @@
     </footer>
 </article>
 {{- end -}}
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const brands = document.querySelectorAll('.brand');
+    
+    brands.forEach(brand => {
+        brand.addEventListener('mousemove', (e) => {
+            const rect = brand.getBoundingClientRect();
+            const x = ((e.clientX - rect.left) / brand.offsetWidth) * 100;
+            const y = ((e.clientY - rect.top) / brand.offsetHeight) * 100;
+            
+            brand.style.setProperty('--x', `${x}%`);
+            brand.style.setProperty('--y', `${y}%`);
+        });
+    });
+});
+</script>

@@ -20,12 +20,47 @@
 }
 
 .first-entry .entry-content {
-    color:var(--primary);
-    margin: 14px 0;
+    color: var(--primary);
     font-size: 16px;
-    -webkit-line-clamp: 3;
     line-height: 1.8;
-    text-align: justify;
+    text-align: left;
+    max-width: 720px;
+}
+
+.first-entry .entry-content p {
+    margin: 12px 0;
+}
+
+.first-entry .entry-content .brand {
+    margin: 0 4px;
+    padding: 3px 10px;
+    font-size: 15px;
+    display: inline-flex;
+    align-items: center;
+    transform: translateY(1px);
+    line-height: 1.2;
+}
+
+.first-entry .entry-content .brand svg {
+    margin: 0 3px;
+    width: 15px;
+    height: 15px;
+    transform: translateY(-0.5px);
+}
+
+.first-entry .entry-content a:not(.brand) {
+    color: var(--primary);
+    text-decoration: none;
+    border-bottom: 1px solid var(--secondary);
+    transition: all 0.3s ease;
+}
+
+.first-entry .entry-content a:not(.brand):hover {
+    border-bottom-color: var(--primary);
+}
+
+.first-entry .entry-content p + p {
+    margin-top: 16px;
 }
 
 .first-entry .entry-footer {
@@ -111,6 +146,8 @@
 }
 
 .brand {
+    position: relative;
+    overflow: hidden;
     padding: 5px 8px 5px 5px;
     margin: 0 2px 0 2px;
     border-radius: 5px;
@@ -120,41 +157,63 @@
     line-height: 16px;
     display: inline-flex;
     align-items: center;
-    transition: background-color cubic-bezier(0.6, -0.28, 0.735, 0.045) 0.3s,
-        filter cubic-bezier(0.6, -0.28, 0.735, 0.045) 0.3s;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
 
+.brand::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(
+        circle at var(--x, center) var(--y, center),
+        rgba(255, 255, 255, 0.25) 0%,
+        rgba(255, 255, 255, 0.12) 25%,
+        rgba(255, 255, 255, 0) 60%
+    );
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+}
+
+.brand:hover::before {
+    opacity: 1;
 }
 
 .brand:hover {
-    filter: brightness(1.2);
+    transform: translateY(-2px);
+    box-shadow: 0 7px 10px rgba(0,0,0,0.2);
 }
 
 .neu-brand {
-    background: #d41a2b;
+    background: linear-gradient(45deg, #d41a2b, #a8141e);
 }
 
 .swu-brand{
-    background-color: #334875;
+    background: linear-gradient(45deg, #334875, #24365e);
 }
 
 .jhu-brand{
-    background-color: #2C678F;
+    background: linear-gradient(45deg, #2C678F, #1c5070);
 }
 
 .greenstand-brand {
-    background: #87c332;
+    background: linear-gradient(45deg, #87c332, #6a9f29);
 }
 
 .wechat-brand {
-    background: #0cc160;
+    background: linear-gradient(45deg, #0cc160, #0aa750);
 }
 
 .wecom-brand {
-    background: #0082EF;
+    background: linear-gradient(45deg, #0082EF, #006bb3);
 }
 
 .tdocs-brand {
-    background: #1e6fff;
+    background: linear-gradient(45deg, #1e6fff, #155acc);
 }
 
 .brand svg {
