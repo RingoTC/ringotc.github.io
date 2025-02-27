@@ -77,8 +77,40 @@
     padding: var(--gap);
     background: var(--entry);
     border-radius: var(--radius);
-    transition: transform 0.1s;
+    transition: all 0.3s ease;
     border: 1px solid var(--border);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    overflow: hidden;
+    filter: brightness(0.97);
+}
+
+.post-entry::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(
+        circle at var(--x, center) var(--y, center),
+        rgba(255, 255, 255, 0.15) 0%,
+        rgba(255, 255, 255, 0.08) 25%,
+        rgba(255, 255, 255, 0) 60%
+    );
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.post-entry:hover::before {
+    opacity: 1;
+}
+
+.post-entry:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 7px 10px rgba(0,0,0,0.2);
+    filter: brightness(1);
 }
 
 .post-entry:active {
@@ -184,7 +216,7 @@
 }
 
 .brand:hover {
-    transform: translateY(-2px);
+    transform: translateY(-2px)!important;
     box-shadow: 0 7px 10px rgba(0,0,0,0.2);
 }
 
@@ -253,8 +285,11 @@
     border-radius: 50%;
     background-color: #eee;
     transition-duration: 0.3s;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
 .avator:hover{
     filter: brightness(1.2);
+    transform: translateY(-2px);
+    box-shadow: 0 7px 10px rgba(0,0,0,0.2);
 }

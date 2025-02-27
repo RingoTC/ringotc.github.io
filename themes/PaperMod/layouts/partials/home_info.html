@@ -71,7 +71,9 @@
 <script>
 document.addEventListener('DOMContentLoaded', () => {
     const brands = document.querySelectorAll('.brand');
+    const postEntries = document.querySelectorAll('.post-entry');
     
+    // Handle brand elements
     brands.forEach(brand => {
         brand.addEventListener('mousemove', (e) => {
             const rect = brand.getBoundingClientRect();
@@ -80,6 +82,18 @@ document.addEventListener('DOMContentLoaded', () => {
             
             brand.style.setProperty('--x', `${x}%`);
             brand.style.setProperty('--y', `${y}%`);
+        });
+    });
+    
+    // Handle post-entry elements
+    postEntries.forEach(entry => {
+        entry.addEventListener('mousemove', (e) => {
+            const rect = entry.getBoundingClientRect();
+            const x = ((e.clientX - rect.left) / entry.offsetWidth) * 100;
+            const y = ((e.clientY - rect.top) / entry.offsetHeight) * 100;
+            
+            entry.style.setProperty('--x', `${x}%`);
+            entry.style.setProperty('--y', `${y}%`);
         });
     });
 });
