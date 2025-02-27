@@ -283,6 +283,11 @@
     box-shadow: 0 7px 10px rgba(0,0,0,0.2);
 }
 
+.brand:active {
+    transform: translateY(1px)!important;
+    transition: transform 0.1s ease;
+}
+
 .neu-brand {
     background: linear-gradient(45deg, #d41a2b, #a8141e);
 }
