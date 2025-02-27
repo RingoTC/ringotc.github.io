@@ -1,7 +1,7 @@
 {{- with site.Params.homeInfoParams }}
 <article class="first-entry home-info">
     <header class="entry-header">
-        <img class="avator" src="/avator.png">
+        <img class="avator" src="/avator.png" alt="Profile Picture">
         <h1 class="with-cursor">{{ .Title | markdownify }}</h1>
     </header>
     <div class="entry-content">
@@ -70,8 +70,21 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
+    const firstEntry = document.querySelector('.first-entry');
     const brands = document.querySelectorAll('.brand');
     const postEntries = document.querySelectorAll('.post-entry');
+    
+    // Handle first-entry element
+    if (firstEntry) {
+        firstEntry.addEventListener('mousemove', (e) => {
+            const rect = firstEntry.getBoundingClientRect();
+            const x = ((e.clientX - rect.left) / firstEntry.offsetWidth) * 100;
+            const y = ((e.clientY - rect.top) / firstEntry.offsetHeight) * 100;
+            
+            firstEntry.style.setProperty('--x', `${x}%`);
+            firstEntry.style.setProperty('--y', `${y}%`);
+        });
+    }
     
     // Handle brand elements
     brands.forEach(brand => {
