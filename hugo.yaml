@@ -1,6 +1,7 @@
 baseURL: "https://ringotc.github.io"
 title: RingoTC BlogHere
-paginate: 5
+pagination:
+  pagerSize: 5
 theme: PaperMod
 
 enableRobotsTXT: true
@@ -75,6 +76,9 @@ params:
     - name: github
       url: "https://github.com/ringotc"
 
+  social:
+    twitter: "CoconutTcringo"
+    
   analytics:
     google:
       SiteVerificationTag: "XYZabc"
