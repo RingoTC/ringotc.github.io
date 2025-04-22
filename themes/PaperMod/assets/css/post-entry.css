@@ -1,0 +1,33 @@
+.tech-stack {
+    margin-top: 20px;
+}
+
+.tech-stack h2 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+.tech-stack ul {
+    list-style: none;
+    padding: 0;
+}
+
+.tech-stack .tech-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.tech-stack .tech-item i {
+    font-size: 24px;
+    margin-right: 10px;
+}
+
+.tech-stack .tech-item span {
+    font-size: 1em;
+}
+
+.tech-stack .tech-item:hover {
+    border: 1px solid black;
+    padding: 5px;
+}

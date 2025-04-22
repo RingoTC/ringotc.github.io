@@ -1,0 +1,99 @@
+<div class="links-container">
+    <h3 class="links-title">友情链接</h3>
+    <div class="links">
+        <a href="https://iwakeup.cn/" class="link-card">
+            <span class="link-name">HuminTed</span>
+        </a>
+        <a href="https://geelaw.blog/" class="link-card">
+            <span class="link-name">GeeLaw</span>
+        </a>
+    </div>
+</div>
+
+<style>
+    .links-container {
+        margin: 2rem 0;
+    }
+    
+    .links-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        color: var(--primary);
+    }
+    
+    .links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+    }
+    
+    .link-card {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        padding: 0.5rem 0.75rem;
+        background-color: var(--entry);
+        border-radius: 0.5rem;
+        border: 1px solid var(--border);
+        transition: all 0.3s ease;
+        text-decoration: none;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        filter: brightness(0.97);
+        overflow: hidden;
+    }
+    
+    .link-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        opacity: 0;
+        transition: opacity 0.3s;
+        pointer-events: none;
+        z-index: 1;
+    }
+    
+    .link-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 7px 10px rgba(0,0,0,0.2);
+        filter: brightness(1);
+        border-color: var(--primary);
+    }
+    
+    .link-card:hover::before {
+        opacity: 1;
+    }
+    
+    .link-card:active {
+        transform: scale(0.96);
+    }
+    
+    .link-name {
+        font-size: 0.875rem;
+        font-weight: 500;
+    }
+    
+    /* Dark mode adjustments */
+    .dark .link-card {
+        background-color: var(--entry);
+        border-color: var(--border);
+    }
+    
+    .dark .link-card:hover {
+        border-color: var(--primary);
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 640px) {
+        .links {
+            gap: 0.5rem;
+        }
+        
+        .link-card {
+            padding: 0.4rem 0.6rem;
+        }
+    }
+</style>

@@ -1,0 +1,7 @@
+{{- $modalID := printf "image-modal-%d" now.UnixNano -}}
+<img loading="lazy" src="{{ .Destination | safeURL }}" alt="{{ .Text }}" {{ with .Title}} title="{{ . }}" {{ end }} 
+    class="zoomable-image" 
+    onclick="showImageModal('{{ $modalID }}')" 
+    style="cursor: zoom-in;" />
+
+{{ partial "components/image-modal.html" (dict "src" (.Destination | safeURL) "alt" .Text "id" $modalID) }}

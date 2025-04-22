@@ -1,0 +1,158 @@
+{{- with site.Params.homeInfoParams }}
+<article class="first-entry home-info">
+    <header class="entry-header">
+        <img class="avator" src="/avator.png" alt="Profile Picture" style="cursor: zoom-in;" 
+            onclick="showImageModal('image-modal-avatar')">
+        <h1 class="with-cursor">{{ .Title | markdownify }}</h1>
+    </header>
+    {{ partial "components/image-modal.html" (dict "src" "/avator.png" "alt" "Profile Picture" "id" "image-modal-avatar" "class" "avatar-modal") }}
+    <div class="entry-content">
+        <p>
+            I'm a software developer and now as a master student in <a href="https://www.northeastern.edu/"
+                class="neu-brand brand"><svg class="w-7 h-7" viewBox="0 0 32 32" fill="none"
+                    aria-label="Northeastern University">
+                    <path
+                        d="M28 11c0-4 1.3-5.3 4-6.3V4h-8.8v.7c2.7 1 4 2.3 4 6.3v11.7L8.6 4.9C7.8 4.1 7.6 4 7 4H0v.7c1.5.2 2.5.6 4.7 2.7l.8.8v13.3c0 4-1.3 5.3-4 6.3v.7h8.8v-.7c-2.7-1-4-2.3-4-6.3V8.8l21.1 19.8h.6V11z"
+                        fill="#fff"></path>
+                </svg>Northeastern University</a>, previously study at <a class="brand swu-brand" href="https://swu.edu.cn/">👋 Southwest University</a> and <a href="https://www.jhun.edu.cn/" class="brand jhu-brand">🤙 Jianghan University</a>. I am familiar with many technologies like Natural Language
+            Processing, Deep Learning and Computer Aided Education also Frontend Development and Computer Architecture.
+            I used to as a volunteer of <a class="brand greenstand-brand" href="https://greenstand.org/">✅ Greenstand</a>
+            to help them build Cloud System
+            especially the devops and interned at <a href="https://weixin.qq.com/" class="brand wechat-brand"><svg
+                    fill="none" viewBox="0 0 16 16" width="1em" height="1em"
+                    class="wedocs-icon wedocs-icon-logo-wechat-16" style="font-size: 24px;">
+                    <g clip-path="url(#logo-wechat-16_clip0_1758_119004_ttv9ib)">
+                        <path fill="currentColor"
+                            d="M2 10.44a4.52 4.52 0 01-2-3.62C0 4.15 2.59 2 5.78 2c2.88 0 5.27 1.76 5.7 4.05H11.19C8.26 6.05 5.9 8 5.9 10.45c0 .39.07.78.2 1.15h-.32c-.66.01-1.3-.08-1.89-.23a1.2 1.2 0 00-.23-.04.49.49 0 00-.23.08l-1.27.73a.25.25 0 01-.12.04.19.19 0 01-.19-.2c0-.02 0-.05.02-.09l.02-.06.05-.21.18-.75a.65.65 0 00.02-.16.3.3 0 00-.14-.27zm1.05-5.16a.77.77 0 101.54 0 .77.77 0 00-1.54 0zm3.85 0a.77.77 0 101.54 0 .77.77 0 00-1.54 0zm4.28 1.15c2.66 0 4.82 1.8 4.82 4.01 0 1.2-.65 2.3-1.66 3.01-.09.08-.13.16-.13.24a20.44 20.44 0 00.22.95v.02c.02.03.03.06.03.1 0 .08-.07.16-.16.16-.04 0-.06-.02-.11-.04l-1.04-.62h-.01c-.07-.04-.15-.08-.25-.07l-.12.03c-.5.15-1.04.23-1.59.23-2.66 0-4.82-1.8-4.82-4 0-2.22 2.16-4.02 4.82-4.02zM8.94 9.11c0 .36.28.64.6.64.36 0 .64-.28.64-.64a.62.62 0 00-1.24 0zm3.2 0c0 .36.28.64.6.64.36 0 .64-.28.64-.64a.62.62 0 00-1.24 0z"
+                            fill-rule="evenodd" clip-rule="evenodd"></path>
+                    </g>
+                    <defs>
+                        <clipPath id="logo-wechat-16_clip0_1758_119004_ttv9ib">
+                            <path fill="#fff" d="M0 0h16v16H0z"></path>
+                        </clipPath>
+                    </defs>
+                </svg>WeChat</a>to contribute to <a href="https://work.weixin.qq.com/" class="brand wecom-brand"><svg
+                    fill="none" viewBox="0 0 16 16" width="1em" height="1em"
+                    class="wedocs-icon wedocs-icon-logo-wecom-16" style="font-size: 24px;">
+                    <g fill="currentColor" clip-path="url(#logo-wecom-16_clip0_1758_119015_1n71m0)">
+                        <path
+                            d="M11.53 8.66a.97.97 0 00.59.28 2.73 2.73 0 011.6.87.23.23 0 10.3-.36 2.73 2.73 0 01-.86-1.74.97.97 0 10-1.63.95zM14.34 9.98a.97.97 0 00-.28.59 2.74 2.74 0 01-.87 1.6.23.23 0 10.36.3l.06-.06a3 3 0 011.73-.86c.16-.04.25-.07.37-.2a.98.98 0 00-1.37-1.37zM12.5 12.52h-.07a2.73 2.73 0 01-1.6-.88.23.23 0 10-.3.36l.07.06a2.73 2.73 0 01.8 1.68.97.97 0 001.62.43.98.98 0 00-.53-1.65zM10.5 10.88a2.74 2.74 0 01.86-1.6c.1-.1.1-.24 0-.34a.23.23 0 00-.36.04l-.06.06a2.72 2.72 0 01-1.67.8.98.98 0 10.95 1.63.97.97 0 00.27-.59z"
+                            fill-rule="evenodd" clip-rule="evenodd"></path>
+                        <path
+                            d="M13.15 6.64a1.77 1.77 0 00-1.54-.13c-.19-2.3-2.4-4.05-5.1-4.05-2.8 0-4.96 1.91-4.96 4.36 0 1.32.64 2.5 1.77 3.32.06.05.09.09.12.19.02.1.02.14 0 .23l-.25.95c-.02.09-.03.12.01.15s.1-.01.14-.03l1.1-.66a.6.6 0 01.25-.08c.12-.01.17.01.26.04a5.63 5.63 0 003.03.05c0 .56.32 1.04.79 1.28a7.41 7.41 0 01-4.24.01l-1.89.97c-.1.05-.26.1-.39.06-.32-.1-.45-.3-.4-.65l.23-1.61A5.65 5.65 0 010 6.8C0 3.6 2.96 1 6.6 1c3.58 0 6.46 2.51 6.55 5.64z">
+                        </path>
+                    </g>
+                    <defs>
+                        <clipPath id="logo-wecom-16_clip0_1758_119015_1n71m0">
+                            <path fill="#fff" d="M0 0h16v16H0z"></path>
+                        </clipPath>
+                    </defs>
+                </svg>WeCom</a> and <a href="https://docs.qq.com/" class="brand tdocs-brand"><svg fill="none"
+                    viewBox="0 0 16 16" width="1em" height="1em" class="wedocs-icon wedocs-icon-tencentdoc-16"
+                    style="font-size: 24px;">
+                    <g clip-path="url(#tencentdoc-16_clip0_1851_34746_scjyca)">
+                        <path fill="currentColor"
+                            d="M1 3c0-1.1.9-2 2-2h10a2 2 0 012 2v10a2 2 0 01-2 2H9.24l.02-.22L9.9 9h3.89l-.47-.43-5.4-5-.36-.34-.05.5-.32 2.77H2.42l.4.42 1.89 2 .07.08h2.07l-.62 5.72-.03.28H3a2 2 0 01-2-2V3z"
+                            fill-rule="evenodd" clip-rule="evenodd"></path>
+                    </g>
+                    <defs>
+                        <clipPath id="tencentdoc-16_clip0_1851_34746_scjyca">
+                            <path fill="#fff" d="M0 0h16v16H0z"></path>
+                        </clipPath>
+                    </defs>
+                </svg>Tencent Docs</a>.
+        </p>
+        <div class="tech-stack">
+            <div class="tech-section">
+                <h3>Machine Learning</h3>
+                <div class="tech-items">
+                    <div class="tech-item" title="Robust and Explainable ML">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Robust and Explainable ML</span>
+                    </div>
+                    <div class="tech-item" title="Natural Language Processing">
+                        <i class="fas fa-language"></i>
+                        <span>Natural Language Processing</span>
+                    </div>
+                    <div class="tech-item" title="AI Infrastructure">
+                        <i class="fas fa-cube"></i>
+                        <span>AI Infra</span>
+                    </div>
+                </div>
+            </div>
+            <div class="tech-section">
+                <h3>Development</h3>
+                <div class="tech-items">
+                    <div class="tech-item" title="React">
+                        <i class="fab fa-react"></i>
+                        <span>React</span>
+                    </div>
+                    <div class="tech-item" title="Next.js">
+                        <i class="fab fa-node-js"></i>
+                        <span>Next.js</span>
+                    </div>
+                    <div class="tech-item" title="WebAssembly">
+                        <i class="fas fa-microchip"></i>
+                        <span>WebAssembly</span>
+                    </div>
+                    <div class="tech-item" title="Node.js">
+                        <i class="fab fa-node"></i>
+                        <span>Node.js</span>
+                    </div>
+                    <div class="tech-item" title="CI/CD">
+                        <i class="fas fa-cogs"></i>
+                        <span>CI/CD</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="entry-footer">
+        {{ partial "social_icons.html" (dict "align" site.Params.homeInfoParams.AlignSocialIconsTo) }}
+    </footer>
+</article>
+{{- end -}}
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const firstEntry = document.querySelector('.first-entry');
+    const brands = document.querySelectorAll('.brand');
+    const postEntries = document.querySelectorAll('.post-entry');
+    
+    // Handle first-entry element
+    if (firstEntry) {
+        firstEntry.addEventListener('mousemove', (e) => {
+            const rect = firstEntry.getBoundingClientRect();
+            const x = ((e.clientX - rect.left) / firstEntry.offsetWidth) * 100;
+            const y = ((e.clientY - rect.top) / firstEntry.offsetHeight) * 100;
+            
+            firstEntry.style.setProperty('--x', `${x}%`);
+            firstEntry.style.setProperty('--y', `${y}%`);
+        });
+    }
+    
+    // Handle brand elements
+    brands.forEach(brand => {
+        brand.addEventListener('mousemove', (e) => {
+            const rect = brand.getBoundingClientRect();
+            const x = ((e.clientX - rect.left) / brand.offsetWidth) * 100;
+            const y = ((e.clientY - rect.top) / brand.offsetHeight) * 100;
+            
+            brand.style.setProperty('--x', `${x}%`);
+            brand.style.setProperty('--y', `${y}%`);
+        });
+    });
+    
+    // Handle post-entry elements
+    postEntries.forEach(entry => {
+        entry.addEventListener('mousemove', (e) => {
+            const rect = entry.getBoundingClientRect();
+            const x = ((e.clientX - rect.left) / entry.offsetWidth) * 100;
+            const y = ((e.clientY - rect.top) / entry.offsetHeight) * 100;
+            
+            entry.style.setProperty('--x', `${x}%`);
+            entry.style.setProperty('--y', `${y}%`);
+        });
+    });
+});
+</script>

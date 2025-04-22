@@ -1,0 +1,133 @@
+{{- $id := .id | default (printf "image-modal-%d" now.UnixNano) -}}
+{{- $class := .class | default "" -}}
+<div class="image-modal {{ $class }}" id="{{ $id }}">
+    <div class="image-modal-content">
+        <span class="image-modal-close">&times;</span>
+        <img src="{{ .src }}" alt="{{ .alt }}" class="image-modal-img" loading="lazy">
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const modal = document.getElementById('{{ $id }}');
+    if (!modal) return;
+    
+    const modalImg = modal.querySelector('.image-modal-img');
+    const closeBtn = modal.querySelector('.image-modal-close');
+    const modalContent = modal.querySelector('.image-modal-content');
+    let scale = 1;
+    const scaleStep = 0.1;
+    const minScale = 0.5;
+    const maxScale = 3;
+    let isScrolling = false;
+    let scrollTimeout;
+
+    // Handle image click
+    modalImg.addEventListener('click', (e) => {
+        e.stopPropagation();
+    });
+
+    // Handle modal content click (anywhere except the image)
+    modalContent.addEventListener('click', (e) => {
+        if (e.target !== modalImg) {
+            closeModal();
+        }
+    });
+
+    // Handle close button
+    closeBtn.addEventListener('click', closeModal);
+
+    // Handle ESC key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.style.display === 'flex') {
+            closeModal();
+        }
+    });
+
+    // Handle mouse wheel zoom with smooth scrolling
+    modalImg.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        
+        if (isScrolling) return;
+        isScrolling = true;
+        
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+            isScrolling = false;
+        }, 50);
+        
+        const delta = e.deltaY > 0 ? -scaleStep : scaleStep;
+        scale = Math.min(Math.max(scale + delta, minScale), maxScale);
+        
+        // Use CSS transform with transition for smooth scaling
+        modalImg.style.transition = 'transform 0.1s ease-out';
+        modalImg.style.transform = `scale(${scale})`;
+        
+        // Remove transition after animation completes
+        setTimeout(() => {
+            modalImg.style.transition = 'none';
+        }, 100);
+    });
+
+    function closeModal() {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+        scale = 1;
+        modalImg.style.transform = 'scale(1)';
+    }
+});
+</script>
+
+<style>
+.image-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    cursor: pointer;
+}
+
+.image-modal-content {
+    position: relative;
+    margin: auto;
+    padding: 0;
+    width: 90%;
+    max-width: 1200px;
+    height: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.image-modal-img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    transition: transform 0.1s ease-out;
+    cursor: default;
+}
+
+.image-modal-close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+    cursor: pointer;
+    z-index: 1001;
+}
+
+.image-modal-close:hover,
+.image-modal-close:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+}
+</style> 
