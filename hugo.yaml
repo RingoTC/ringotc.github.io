@@ -79,6 +79,8 @@ params:
       url: "https://x.com/CoconutTcringo"
     - name: github
       url: "https://github.com/ringotc"
+    - name: linkedin
+      url: "https://www.linkedin.com/in/derek-liao/"
 
   social:
     twitter: "CoconutTcringo"
