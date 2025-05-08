@@ -36,13 +36,13 @@ IRT模型其实本质上就是一个简单的 logistic regression，后来C Piec
 # Knowledge Tracing 具有代表性的工作
 在我看来 Knowledge Tracing 最具有代表性的工作无非是两篇，DKT[1] 和 AKT[2]，这两篇文章分别代表了两个经典的网络，RNN 和 Transformer。
 
-![DKT Model](/rethinking-kt/dkt.png)
+![DKT Model](/rethinking-kt/DKT.png)
 
 *图 1：DKT 模型*
 
 DKT 模型使用循环神经网络（RNN）来捕捉学生在学习过程中的时间依赖性。通过输入学生的历史答题记录，DKT 模型能够动态更新学生的知识状态，并预测他们在未来题目上的表现。
 
-![AKT Model](/rethinking-kt/akt.png)
+![AKT Model](/rethinking-kt/AKT.png)
 
 *图 2：AKT 模型*
 
