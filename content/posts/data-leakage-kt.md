@@ -101,24 +101,10 @@ return x, attn
 ```
 
 然后取得了非常好的效果
-| Model            | algebra05 AUC | algebra05 RMSE | bridge06 AUC | bridge06 RMSE | assistments09 AUC | assistments09 RMSE | slepemapy AUC | slepemapy RMSE | spanish AUC | spanish RMSE | statics AUC | statics RMSE |
-|------------------|---------------|----------------|---------------|----------------|--------------------|---------------------|----------------|----------------|--------------|---------------|--------------|---------------|
-| IRT              | 0.7141        | 0.4005         | 0.6559        | 0.4025         | 0.6708             | 0.4631              | 0.6210         | 0.4068         | 0.6956       | 0.4596        | 0.7404       | 0.4303        |
-| PFA              | 0.7481        | 0.3932         | 0.7460        | 0.3848         | 0.7284             | 0.4444              | 0.6583         | 0.4020         | 0.7467       | 0.4428        | 0.7489       | 0.4096        |
-| DKT              | 0.7636        | 0.3921         | 0.7589        | 0.3820         | 0.7504             | 0.4371              | 0.6986         | 0.3978         | 0.8066       | 0.4139        | 0.7674       | 0.4111        |
-| DKVMN            | 0.7562        | 0.3907         | 0.7463        | 0.3864         | 0.7475             | 0.4375              | 0.7064         | 0.3962         | 0.8027       | 0.4156        | 0.7736       | 0.3975        |
-| SAKT             | 0.7636        | 0.3899         | 0.7512        | 0.3862         | 0.7491             | 0.4381              | 0.6846         | 0.4062         | 0.8065       | 0.4179        | 0.7492       | 0.4105        |
-| SparseKT         | 0.7806        | 0.3875         | 0.7694        | 0.3804         | 0.7670             | 0.4396              | 0.7255         | 0.3903         | 0.8395       | 0.3959        | 0.7887       | 0.3909        |
-| ATKT             | 0.7624        | 0.3899         | 0.7426        | 0.3891         | 0.7543             | 0.4348              | 0.6952         | 0.3983         | 0.8047       | 0.4186        | 0.7421       | 0.4130        |
-| CL4KT            | 0.7891        | 0.3815         | 0.7733        | 0.3791         | 0.7624             | 0.4333              | 0.7218         | 0.3926         | 0.8289       | 0.4049        | 0.7943       | 0.3945        |
-| DTransformer     | 0.7694        | 0.3906         | 0.7391        | 0.3892         | 0.7508             | 0.4505              | 0.7217         | 0.3892         | 0.8170       | 0.4108        | 0.7690       | 0.3966        |
-| MIKT             | 0.7912        | 0.3824         | 0.7721        | 0.3784         | 0.7693             | 0.4339              | 0.7293         | 0.3874         | 0.8374       | 0.3972        | 0.7812       | 0.3903        |
-| SimpleKT         | 0.7763        | 0.3846         | 0.7656        | 0.3809         | 0.7566             | 0.4346              | 0.7150         | 0.3916         | 0.8353       | 0.3985        | 0.7692       | 0.3980        |
-| FoLiBi(SimpleKT) | 0.7827        | 0.3832         | 0.7714        | 0.3799         | 0.7615             | 0.4322              | 0.7126         | 0.3344         | 0.8366       | 0.3979        | 0.7850       | 0.3922        |
-| RouterSimpleKT   | 0.7844        | 0.3820         | 0.7710        | 0.3790         | 0.7716             | 0.4288              | 0.7452         | 0.3843         | 0.8429       | 0.3933        | 0.7848       | 0.3923        |
-| AKT              | 0.7860        | 0.3827         | 0.7664        | 0.3819         | 0.7660             | 0.4379              | 0.7243         | 0.3894         | 0.8373       | 0.3964        | 0.7999       | 0.3889        |
-| FoLiBi(AKT)      | 0.7960        | 0.3800         | 0.7805        | 0.3765         | 0.7716             | 0.4329              | 0.7284         | 0.3893         | 0.8379       | 0.3974        | 0.7988       | 0.3894        |
-| RouterAKT        | 0.8011        | 0.3775         | 0.7842        | 0.3749         | 0.7816             | 0.4287              | 0.7562         | 0.3838         | 0.8519       | 0.3870        | 0.8123       | 0.3819        |
+<table class="routerkt-result"><thead><tr><th>Models</th><th>algebra05</th><th>assist09</th><th>bridge06</th><th>slepemapy</th><th>spanish</th><th>ednet</th><th>database</th><th>computer</th><th>prob</th><th>linux</th></tr></thead><tbody><tr><td>DKT</td><td>0.783</td><td>0.7577</td><td>0.7616</td><td>0.7049</td><td>0.8136</td><td>0.6533</td><td>0.754</td><td>0.7243</td><td>0.7153</td><td>0.7501</td></tr><tr><td>SAKT</td><td>0.7503</td><td>0.7366</td><td>0.7337</td><td>0.6706</td><td>0.8008</td><td>0.6466</td><td>0.7416</td><td>0.7074</td><td>0.7142</td><td>0.7374</td></tr><tr><td>DKVMN</td><td>0.771</td><td>0.7561</td><td>0.7668</td><td>0.6996</td><td>0.8119</td><td>0.6587</td><td>0.753</td><td>0.7168</td><td>0.7196</td><td>0.7459</td></tr><tr><td>CoreKT</td><td>0.7592</td><td>0.7438</td><td>0.747</td><td>0.7143</td><td>0.8163</td><td>0.6622</td><td>0.7836</td><td>0.7394</td><td>0.7311</td><td>0.781</td></tr>
+<tr><td>ATKT</td><td>0.7595</td><td>0.7545</td><td>0.741</td><td>0.6947</td><td>0.8028</td><td>0.6444</td><td>0.7548</td><td>0.7253</td><td>0.7029</td><td>0.753</td></tr><tr><td>DeepIRT</td><td>0.7705</td><td>0.7564</td><td>0.7677</td><td>0.6946</td><td>0.806</td><td>0.6568</td><td>0.7494</td><td>0.7156</td><td>0.7212</td><td>0.7437</td></tr><tr><td>SparseKT/relative</td><td>0.7839</td><td>0.7677</td><td>0.7687</td><td>0.7249</td><td>0.8382</td><td>0.6953</td><td>0.8348</td><td>0.7968</td><td>0.7398</td><td>0.8300</td></tr><tr><td>SimpleKT/relative</td><td>0.7781</td><td>0.7552</td><td>0.7625</td><td>0.7149</td><td>0.8365</td><td>0.6671</td><td>0.7589</td><td>0.7253</td><td>0.7291</td><td>0.7527</td></tr><tr><td>SimpleKT/monotonic</td><td>0.7787</td><td>0.7411</td><td>0.7561</td><td>0.7106</td><td>0.8353</td><td>0.6659</td><td>0.7499</td><td>0.722</td><td>0.7286</td><td>0.7496</td></tr>
+<tr><td>SimpleKT/ALiBi</td><td>0.7827</td><td>0.7615</td><td>0.7714</td><td>0.7126</td><td>0.8366</td><td>0.66</td><td>0.7571</td><td>0.7571</td><td>0.7308</td><td>0.7543</td></tr><tr><td>SimpleKT/RouterKT</td><td>0.7844</td><td>0.7716</td><td>0.7757</td><td>0.7452</td><td>0.8429</td><td>0.6789</td><td>0.8041</td><td>0.7456</td><td>0.7423</td><td>0.7731</td></tr><tr><td>CL4KT/relative</td><td>0.7736</td><td>0.7555</td><td>0.7652</td><td>0.7116</td><td>0.8169</td><td>0.6632</td><td>0.7862</td><td>0.7239</td><td>0.7172</td><td>0.7596</td></tr><tr><td>CL4KT/monotonic</td><td>0.7765</td><td>0.7554</td><td>0.7642</td><td>0.7123</td><td>0.8147</td><td>0.6617</td><td>0.7551</td><td>0.7251</td><td>0.7218</td><td>0.7526</td></tr><tr><td>CL4KT/ALiBi</td><td>0.7899</td><td>0.7609</td><td>0.7765</td><td>0.7147</td><td>0.8241</td><td>0.6659</td><td>0.7593</td><td>0.7273</td><td>0.7219</td><td>0.7602</td></tr>
+<tr><td>CL4KT/RouterKT</td><td>0.7878</td><td>0.7815</td><td>0.7792</td><td>0.7519</td><td>0.8268</td><td>0.6947</td><td>0.8372</td><td>0.7752</td><td>0.7436</td><td>0.822</td></tr><tr><td>AKT/relative</td><td>0.7879</td><td>0.7661</td><td>0.7711</td><td>0.7224</td><td>0.8427</td><td>0.6939</td><td>0.8236</td><td>0.7978</td><td>0.733</td><td>0.8217</td></tr><tr><td>AKT/monotonic</td><td>0.7854</td><td>0.7636</td><td>0.7671</td><td>0.7253</td><td>0.8384</td><td>0.6945</td><td>0.8242</td><td>0.7975</td><td>0.7508</td><td>0.8202</td></tr><tr><td>AKT/ALiBi</td><td>0.7974</td><td>0.7751</td><td>0.7792</td><td>0.7266</td><td>0.839</td><td>0.6864</td><td>0.8267</td><td>0.7974</td><td>0.7279</td><td>0.8208</td></tr><tr><td>AKT/RouterKT</td><td>0.8017</td><td>0.7815</td><td>0.7872</td><td>0.7545</td><td>0.853</td><td>0.7213</td><td>0.896</td><td>0.8399</td><td>0.7768</td><td>0.8737</td></tr></tbody></table>
 
 
 可以看到效果的确是非常不错，实现上看起来也没有太大的问题，直到这里我都没有发现问题，甚至以为性能就该好，这不就是软正交学习嘛！而且性能提升也不是说剧增，除了在部分数据集上（database, prob）等，但是这个提升幅度和 DisKT 类似，因此我欣然接受了这个结果。
@@ -342,46 +328,36 @@ def contradictory_attention(query, key, value1, value2, mask=None, dropout=None,
 
 ```python
 def contradictory_attention(query, key, value1, value2, mask=None, dropout=None, counter_attention_mask=None):
-    "Compute 'Scaled Dot Product Attention'"
     bs, head, seqlen, d_k = query.size(0), query.size(1), query.size(2), query.size(-1)
     device = query.device
-    
     scores = torch.matmul(query, key.transpose(-2, -1)) / math.sqrt(d_k)
     
     if mask is not None:
         scores = scores.masked_fill(mask == 0, -1e32)
     
-    p_attn = F.softmax(scores, dim=-1)  # [batch_size, head, seq_len, seq_len]
+    p_attn = F.softmax(scores, dim = -1)  # [batch_size, head, seq_len, seq_len]
     
-    counter_attention_mask = counter_attention_mask.unsqueeze(1)
-    counter_attention_mask = counter_attention_mask.expand(-1, head*seqlen, -1)
-    counter_attention_mask = counter_attention_mask.reshape(-1, seqlen)
+    # 准备counter_attention_mask，使其形状匹配p_attn
+    expanded_mask = counter_attention_mask.unsqueeze(1).unsqueeze(1)  # [bs, 1, 1, seqlen]
+    expanded_mask = expanded_mask.expand(-1, head, seqlen, -1)  # [bs, head, seqlen, seqlen]
     
-    attn_reshape = p_attn.reshape(bs*head*seqlen, -1)
+    # 直接在原始维度应用mask
+    LOG_MIN = -1e32
+    masked_attn = torch.where(expanded_mask == 1, 
+                             torch.ones_like(p_attn) * LOG_MIN, 
+                             torch.log(p_attn + 1e-10))
     
-    masked_attn = torch.where((counter_attention_mask == 1), 
-                             torch.zeros_like(attn_reshape), 
-                             attn_reshape)
-    
-    masked_attn = masked_attn.reshape(bs, head, seqlen, -1)
-    
-    row_sums = masked_attn.sum(dim=-1, keepdim=True)
-    
-    valid_rows = (row_sums > 0).float()
-    safe_row_sums = row_sums + (1 - valid_rows)
-    
-    normalized_attn = masked_attn / safe_row_sums
+    p_attn = F.softmax(masked_attn, dim = -1)
     
     pad_zero = torch.zeros(bs, head, 1, seqlen).to(device)
-    normalized_attn = torch.cat([pad_zero, normalized_attn[:, :, 1:, :]], dim=2)
+    p_attn = torch.cat([pad_zero, p_attn[:, :, 1:, :]], dim=2)
     
     if dropout is not None:
-        normalized_attn = dropout(normalized_attn)
+        p_attn = dropout(p_attn)
     
-    output_v1 = torch.matmul(normalized_attn, value1)
-    output_v2 = torch.matmul(normalized_attn, value2)
-    
-    return output_v1, output_v2, normalized_attn
+    output_v1 = torch.matmul(p_attn, value1)
+    output_v2 = torch.matmul(p_attn, value2)
+    return output_v1, output_v2, p_attn
 ```
 
 也就是手动屏蔽一下不应该获得注意力的元素。我在修复后的版本上重跑了 DisKT 的实验：
@@ -628,8 +604,10 @@ def contradictory_attention(query, key, value1, value2, mask=None, dropout=None,
 
 同时测试了随机初始化下带早停和不带早停的情况。
 
+不过值得一提的是，DisKT 使用了和 SimpleKT 类似的单层编码器结构，并且可以看到在修复后，DisKT在更长的序列长度上仍然保持了较好的性能，**这说明我们并不应该否认他们模型的贡献**，只是对于相关结果应当更加慎重。
+
 # PyKT的问题准确率[3]
-我在 pykt 做随机标签检测，发现他们的指标也有异常。[PyKT - 关于在随机数据上的训练问题](https://github.com/pykt-team/pykt-toolkit/issues/245)
+我在 pykt 做随机标签检测，发现他们的指标可能也有异常。[PyKT - 关于在随机数据上的训练问题](https://github.com/pykt-team/pykt-toolkit/issues/245)
 
 ![PyKT](/rethinking-kt/pykt-balance.png)
 
@@ -641,10 +619,16 @@ def contradictory_attention(query, key, value1, value2, mask=None, dropout=None,
 
 testauc是pykt提出的在题目级别进行预测（如果我没猜错的话），所有需要聚合的（比如oriauclate_mean, windowaucearly_preds），是在知识点级别进行预测。
 
-这里也是非常诡异，按理说即使是在题目级别进行预测，我们的结果也应当是 0.5，而不应该是 0.66附近（其实就是2/3），这可能是 PyKT 框架的一个结构性偏差，可能也是为什么他们报的题目级别的指标异常的高。
+这里也是非常诡异，按理说即使是在题目级别进行预测，我们的结果也应当是 0.5，而不应该是 0.66附近（其实就是2/3），这可能是 PyKT 框架的一个结构性偏差，可能也是为什么他们报的题目级别的指标异常的高。不过大部分使用 PyKT 的文章，都会使用这套统一的评测框架对结果进行评测，这种偏差不至于影响到模型的公平性比较。
 
 ## conclusion
 我们发现，RouterKT 和 DisKT 在有数据泄露的情况下，在 algebra2005 这个数据集上的性能提升都非常有限，如果后面看到明显高于 AKT 在 algebra2005 上的结果，就得仔细看看了...
+
+在几个月前，发了篇关于 Knowledge Tracing 的牢骚文，当时认为 Knowledge Tracing 做无可做。后面意外看到 MoH: Multi-Head Attention as Mixture-of-Head Attention [4] 这篇文章，快速复现他们的注意力机制发现的确是有提升，而且在常见的几个数据集上，提升都在预期内（大部分的文章，相比于AKT，提升都在 1 个点上下），因为是在 AKT 的基础上改的，所以也并未意识到有何不妥。
+
+可能真如我在牢骚文里所言，知识追踪的性能上限几乎在五年前的 AKT 甚至十年前的 DKT 就已经确定了。数据本身的稀疏性、学生行为的噪音，这些因素让进一步提升准确率变得很难。另一方面就是，这个问题本身是一个既简单又复杂的问题，简单在于，要达到「几乎是大家心里公认的SoTA」，AKT，的性能，几乎不需要额外的设计，比如 SimpleKT 告诉我们，去掉 AKT 的距离机制、去掉交叉编码器同样能得到大差不差的结果，RNN（也就是DKT）达到的模型性能也比较好。复杂在于我们刚刚提到的稀疏性、噪音，这决定了信息论角度的性能上限。
+
+另一方面，在面试微信的时候，和面试官聊到了知识追踪这个任务。面试官灵魂发问，「你觉得真的会有平台需要知道学生的未来做题情况吗」？我被问得哑口无言。诚然，知识追踪宣称自己有捕捉学生知识状态的能力，但是我们要如何去应用这个能力呢？我看到，最近有一些论文开始使用知识追踪的知识状态去做 Tutor，Training Turn-by-Turn Verifiers for Dialogue Tutoring Agents: The Curious Case of LLMs as Your Coding Tutors [5]。
 
 ## reference
 [1] Kudugunta S, Huang Y, Bapna A, et al. Beyond distillation: Task-level mixture-of-experts for efficient inference[J]. arXiv preprint arXiv:2110.03742, 2021.
@@ -652,6 +636,10 @@ testauc是pykt提出的在题目级别进行预测（如果我没猜错的话）
 [2] Zhou Y, Lv Z, Zhang S, et al. Disentangled Knowledge Tracing for Alleviating Cognitive Bias[C]//Proceedings of the ACM on Web Conference 2025. 2025: 2633-2645.
 
 [3] Liu Z, Liu Q, Chen J, et al. pyKT: a python library to benchmark deep learning based knowledge tracing models[J]. Advances in Neural Information Processing Systems, 2022, 35: 18542-18555.
+
+[4] Jin, Peng, et al. "MoH: Multi-head attention as mixture-of-head attention." arXiv preprint arXiv:2410.11842 (2024).
+
+[5] Wang, Jian, et al. "Training Turn-by-Turn Verifiers for Dialogue Tutoring Agents: The Curious Case of LLMs as Your Coding Tutors." arXiv preprint arXiv:2502.13311 (2025).
 
 <style>
 .diskt-result td:nth-child(2),
@@ -693,4 +681,11 @@ testauc是pykt提出的在题目级别进行预测（如果我没猜错的话）
 .diskt-result-v3 th:nth-child(5) {
     background-color: var(--green);
 }
+
+.routerkt-result tr:nth-child(11),
+.routerkt-result tr:nth-child(15),
+.routerkt-result tr:nth-child(19) {
+    background-color: var(--red);
+}
+
 </style>
