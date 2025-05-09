@@ -6,7 +6,9 @@ draft = false
 
 ## RouterKT 的数据泄露
 
-最近完成了一份工作，借鉴 MoE 的思路去正交化 Knowledge Tracing 里的并行化模块，期望是不同的 Attention Head 应当关注到不同的特征，比如有的 Attention Head 应当关注到近期的内容，有的应当关注到远期的内容，然而现有的很多模型都会给所有的 Attention Head 加同样的 forgetting decay，也就是给注意力机制以各种方式加上距离相关的decay，迫使模型更多关注最近的交互。然而，这可能会损坏模型对其他模式的关注，比如 spacing effects，也就是系统其实是会周期性安排复习的，如果我们更多关注最近的交互，会很容易忽略掉这些模式。
+最近完成了一份工作，借鉴 MoE 的思路去正交化 Knowledge Tracing 里的并行化模块，期望是不同的 Attention Head 应当关注到不同的特征，比如有的 Attention Head 应当关注到近期的内容，有的应当关注到远期的内容。
+
+然而现有的很多模型都会给所有的 Attention Head 加同样的 forgetting decay，也就是给注意力机制以各种方式加上距离相关的decay，迫使模型更多关注最近的交互。然而，这可能会损坏模型对其他模式的关注，比如 spacing effects，也就是系统其实是会周期性安排复习的，如果我们更多关注最近的交互，会很容易忽略掉这些模式。
 
 借鉴 MoE 的思路，我们正交化并行的 Multi Head Attention，也就是加上一个路由损失：
 
@@ -64,10 +66,8 @@ def forward(self, q, k, v, mask, zero_pad, question_difficulty_emb, q4router=Non
     routing_mask[:, :, self.n_shared_heads:] = dynamic_scores_reshaped  # Add dynamic head weights
     
     # Reshape routing mask to match attention dimensions
-    # routing_mask = routing_mask.mean(dim=1).unsqueeze(-1).unsqueeze(-1)
+    routing_mask = routing_mask.mean(dim=1).unsqueeze(-1).unsqueeze(-1)
     
-    routing_mask = routing_mask.permute(0, 2, 1).unsqueeze(-1)
-
     # Calculate attention using the attention function
     scores = attention4router_kt(q, k, v, dim_head, mask, self.dropout, zero_pad, routing_mask, device=self.params["device"])
     
@@ -76,7 +76,6 @@ def forward(self, q, k, v, mask, zero_pad, question_difficulty_emb, q4router=Non
     
     return self.out_proj(concat)
 ```
-
 
 基本的逻辑就是用一个线性层去学习如何Drop掉一部分注意力头，然后用软聚合的方式，这个思想来自于 MHA。之前很多其他领域的实验证明多头注意力机制里的大部分头都是冗余的。这件事情也的确在知识追踪任务里成立，我尝试把 AKT 和 SimpleKT 的注意力头数量设置为 1，实验证明没有任何性能下降。
 
