@@ -387,7 +387,7 @@ def contradictory_attention(query, key, value1, value2, mask=None, dropout=None,
 
 也就是手动屏蔽一下不应该获得注意力的元素。我在修复后的版本上重跑了 DisKT 的实验：
 
-<table>
+<table class="diskt-result">
   <thead>
     <tr>
       <th>Dataset</th>
@@ -500,13 +500,13 @@ testauc是pykt提出的在题目级别进行预测（如果我没猜错的话）
 [3] Liu Z, Liu Q, Chen J, et al. pyKT: a python library to benchmark deep learning based knowledge tracing models[J]. Advances in Neural Information Processing Systems, 2022, 35: 18542-18555.
 
 <style>
-table td:nth-child(2),
-table th:nth-child(2) {
+.diskt-result td:nth-child(2),
+.diskt-result th:nth-child(2) {
     background-color: #ffeaea;
 }
 
-table td:nth-child(3),
-table th:nth-child(3) {
+.diskt-result td:nth-child(3),
+.diskt-result th:nth-child(3) {
     background-color: #eaffea;
 }
 </style>
