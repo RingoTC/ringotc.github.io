@@ -387,17 +387,92 @@ def contradictory_attention(query, key, value1, value2, mask=None, dropout=None,
 
 也就是手动屏蔽一下不应该获得注意力的元素。我在修复后的版本上重跑了 DisKT 的实验：
 
-|  Dataset  | DisKT✓ | DisKT-Fixed | simpleKT | 数据泄露的收益 | 与SimpleKT 相比提升 |
-|:---------:|:------:|:-----------:|:--------:|----------------|---------------------|
-| assist09  | 0.7923 |     0.77351 |   0.7709 |          1.88% |               0.26% |
-| algebra05 | 0.8033 |      0.7896 |   0.7874 |          1.37% |               0.22% |
-| algebra06 | 0.7846 |     0.77015 |   0.7695 |          1.45% |               0.07% |
-| ednet     | 0.7384 |     0.70105 |   0.7048 |          3.74% |              -0.38% |
-| prob      | 0.7731 |     0.73794 |   0.7265 |          3.52% |               1.14% |
-| linux     | 0.8622 |     0.82169 |   0.8221 |          4.05% |              -0.04% |
-| comp      | 0.8324 |     0.80098 |   0.8000 |          3.14% |               0.10% |
-| database  | 0.8769 |     0.82688 |   0.8272 |          5.00% |              -0.03% |
-| slepemapy | 0.7632 |     0.72501 |   0.7269 |          3.82% |              -0.19% |
+<table>
+  <thead>
+    <tr>
+      <th>Dataset</th>
+      <th>DisKT✓</th>
+      <th>DisKT-Fixed</th>
+      <th>simpleKT</th>
+      <th>数据泄露的收益</th>
+      <th>与SimpleKT 相比提升</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>assist09</td>
+      <td>0.7923</td>
+      <td>0.77351</td>
+      <td>0.7709</td>
+      <td>1.88%</td>
+      <td>0.26%</td>
+    </tr>
+    <tr>
+      <td>algebra05</td>
+      <td>0.8033</td>
+      <td>0.7896</td>
+      <td>0.7874</td>
+      <td>1.37%</td>
+      <td>0.22%</td>
+    </tr>
+    <tr>
+      <td>algebra06</td>
+      <td>0.7846</td>
+      <td>0.77015</td>
+      <td>0.7695</td>
+      <td>1.45%</td>
+      <td>0.07%</td>
+    </tr>
+    <tr>
+      <td>ednet</td>
+      <td>0.7384</td>
+      <td>0.70105</td>
+      <td>0.7048</td>
+      <td>3.74%</td>
+      <td>-0.38%</td>
+    </tr>
+    <tr>
+      <td>prob</td>
+      <td>0.7731</td>
+      <td>0.73794</td>
+      <td>0.7265</td>
+      <td>3.52%</td>
+      <td>1.14%</td>
+    </tr>
+    <tr>
+      <td>linux</td>
+      <td>0.8622</td>
+      <td>0.82169</td>
+      <td>0.8221</td>
+      <td>4.05%</td>
+      <td>-0.04%</td>
+    </tr>
+    <tr>
+      <td>comp</td>
+      <td>0.8324</td>
+      <td>0.80098</td>
+      <td>0.8000</td>
+      <td>3.14%</td>
+      <td>0.10%</td>
+    </tr>
+    <tr>
+      <td>database</td>
+      <td>0.8769</td>
+      <td>0.82688</td>
+      <td>0.8272</td>
+      <td>5.00%</td>
+      <td>-0.03%</td>
+    </tr>
+    <tr>
+      <td>slepemapy</td>
+      <td>0.7632</td>
+      <td>0.72501</td>
+      <td>0.7269</td>
+      <td>3.82%</td>
+      <td>-0.19%</td>
+    </tr>
+  </tbody>
+</table>
 
 # PyKT的问题准确率[3]
 我在 pykt 做随机标签检测，发现他们的指标也有异常。[PyKT - 关于在随机数据上的训练问题](https://github.com/pykt-team/pykt-toolkit/issues/245)
@@ -414,7 +489,6 @@ testauc是pykt提出的在题目级别进行预测（如果我没猜错的话）
 
 这里也是非常诡异，按理说即使是在题目级别进行预测，我们的结果也应当是 0.5，而不应该是 0.66附近（其实就是2/3），这可能是 PyKT 框架的一个结构性偏差，可能也是为什么他们报的题目级别的指标异常的高。
 
-
 ## conclusion
 我们发现，RouterKT 和 DisKT 在有数据泄露的情况下，在 algebra2005 这个数据集上的性能提升都非常有限，如果后面看到明显高于 AKT 在 algebra2005 上的结果，就得仔细看看了...
 
@@ -424,3 +498,15 @@ testauc是pykt提出的在题目级别进行预测（如果我没猜错的话）
 [2] Zhou Y, Lv Z, Zhang S, et al. Disentangled Knowledge Tracing for Alleviating Cognitive Bias[C]//Proceedings of the ACM on Web Conference 2025. 2025: 2633-2645.
 
 [3] Liu Z, Liu Q, Chen J, et al. pyKT: a python library to benchmark deep learning based knowledge tracing models[J]. Advances in Neural Information Processing Systems, 2022, 35: 18542-18555.
+
+<style>
+table td:nth-child(2),
+table th:nth-child(2) {
+    background-color: #ffeaea;
+}
+
+table td:nth-child(3),
+table th:nth-child(3) {
+    background-color: #eaffea;
+}
+</style>
