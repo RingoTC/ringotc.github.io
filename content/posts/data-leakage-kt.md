@@ -282,12 +282,12 @@ routing_mask = routing_mask.mean(dim=1).unsqueeze(-1).unsqueeze(-1)
 routing_mask = routing_mask.permute(0, 2, 1).unsqueeze(-1)
 ```
 
-当我们把这个部分修正，就只能得到和 AKT 差不多的性能。这里也提示我，一个非常值得注意的点是，自回归任务里平均池化、最大最小池化是非常需要注意的。事实上，我在开始想办法把 MoE 的思想融入知识追踪任务的时候，就在考虑是否存在数据泄露，因为性能提升很大，显得非常异常。自查过几次代码，也询问过 ChatGPT、Claude、Gemini 等 ChatBot 他们都说没问题...
+当我们把这个部分修正，就只能得到和 AKT 差不多的性能。这里也提示我，一个非常值得注意的点是，自回归任务里平均池化、最大最小池化是非常需要注意的。事实上，我在开始想办法把 MoE 的思想融入知识追踪任务的时候，就在考虑是否存在数据泄露，因为性能提升很大，显得非常异常。自查过几次代码，也询问过 Chadiskt-result-v2PT、Claude、Gemini 等 ChatBot 他们都说没问题...
 
 ![Data Leakage](/rethinking-kt/data-leakage-kt.png)
 
 
-## DisKT 的数据泄露[2]
+## DisKT 的数据泄露[2] [Github Issue](https://github.com/zyy-2001/DisKT/issues/2)
 上文提到， RouterKT 的性能提升和 DisKT 类似，要知道，RouterKT 本身是发生数据泄露了，性能提升还和 DisKT类似，这不是很诡异吗？于是我尝试在 DisKT 的框架下进行数据泄露的检验，果然发现了问题！
 
 我首先构造了随机序列：
@@ -473,6 +473,161 @@ def contradictory_attention(query, key, value1, value2, mask=None, dropout=None,
   </tbody>
 </table>
 
+作者提醒，上面的实现并没考虑到第二次 Softmax 的非线性能力，这的确是一个问题，因此我提出了新的修复方案：
+```python
+def contradictory_attention(query, key, value1, value2, mask=None, dropout=None, counter_attention_mask=None):
+    bs, head, seqlen, d_k = query.size(0), query.size(1), query.size(2), query.size(-1)
+    device = query.device
+    scores = torch.matmul(query, key.transpose(-2, -1)) / math.sqrt(d_k)
+    
+    if mask is not None:
+        scores = scores.masked_fill(mask == 0, -1e32)
+    
+    p_attn = F.softmax(scores, dim = -1)  # [batch_size, head, seq_len, seq_len]
+    
+    # 准备counter_attention_mask，使其形状匹配p_attn
+    expanded_mask = counter_attention_mask.unsqueeze(1).unsqueeze(1)  # [bs, 1, 1, seqlen]
+    expanded_mask = expanded_mask.expand(-1, head, seqlen, -1)  # [bs, head, seqlen, seqlen]
+    
+    # 直接在原始维度应用mask
+    LOG_MIN = -1e32
+    masked_attn = torch.where(expanded_mask == 1, 
+                             torch.ones_like(p_attn) * LOG_MIN, 
+                             torch.log(p_attn + 1e-10))
+    
+    p_attn = F.softmax(masked_attn, dim = -1)
+    
+    pad_zero = torch.zeros(bs, head, 1, seqlen).to(device)
+    p_attn = torch.cat([pad_zero, p_attn[:, :, 1:, :]], dim=2)
+    
+    if dropout is not None:
+        p_attn = dropout(p_attn)
+    
+    output_v1 = torch.matmul(p_attn, value1)
+    output_v2 = torch.matmul(p_attn, value2)
+    return output_v1, output_v2, p_attn
+```
+这里还是保留了第二次 Softmax 的非线性能力，不过避免了因果掩码的丢失。
+
+<table class="diskt-result-v2"><thead>
+  <tr>
+    <th class="diskt-result-v2-0lax">Dataset</th>
+    <th class="diskt-result-v2-0lax">DisKT</th>
+    <th class="diskt-result-v2-0lax">DisKT-第一版Fixed</th>
+    <th class="diskt-result-v2-0lax">DisKT-Fixed</th>
+    <th class="diskt-result-v2-0lax">simpleKT</th>
+    <th class="diskt-result-v2-0lax">AKT</th>
+    <th class="diskt-result-v2-0lax">数据泄露的收益</th>
+    <th class="diskt-result-v2-0lax">与SimpleKT 相比提升</th>
+    <th class="diskt-result-v2-0lax">与AKT 相比提升</th>
+    <th class="diskt-result-v2-0lax">两版 Fix 差距</th>
+  </tr></thead>
+<tbody>
+  <tr>
+    <td class="diskt-result-v2-0lax">assist09</td>
+    <td class="diskt-result-v2-0lax">0.7923</td>
+    <td class="diskt-result-v2-0lax">0.7735</td>
+    <td class="diskt-result-v2-0lax">0.7725</td>
+    <td class="diskt-result-v2-0lax">0.7709</td>
+    <td class="diskt-result-v2-0lax">0.7705</td>
+    <td class="diskt-result-v2-0lax">1.98%</td>
+    <td class="diskt-result-v2-0lax">0.16%</td>
+    <td class="diskt-result-v2-0lax">0.20%</td>
+    <td class="diskt-result-v2-0lax">-0.10%</td>
+  </tr>
+  <tr>
+    <td class="diskt-result-v2-0lax">algebra05</td>
+    <td class="diskt-result-v2-0lax">0.8033</td>
+    <td class="diskt-result-v2-0lax">0.7896</td>
+    <td class="diskt-result-v2-0lax">0.7904</td>
+    <td class="diskt-result-v2-0lax">0.7874</td>
+    <td class="diskt-result-v2-0lax">0.7932</td>
+    <td class="diskt-result-v2-0lax">1.29%</td>
+    <td class="diskt-result-v2-0lax">0.30%</td>
+    <td class="diskt-result-v2-0lax">-0.28%</td>
+    <td class="diskt-result-v2-0lax">0.08%</td>
+  </tr>
+  <tr>
+    <td class="diskt-result-v2-0lax">prob</td>
+    <td class="diskt-result-v2-0lax">0.7731</td>
+    <td class="diskt-result-v2-0lax">0.7379</td>
+    <td class="diskt-result-v2-0lax">0.7357</td>
+    <td class="diskt-result-v2-0lax">0.7265</td>
+    <td class="diskt-result-v2-0lax">0.7376</td>
+    <td class="diskt-result-v2-0lax">3.74%</td>
+    <td class="diskt-result-v2-0lax">0.92%</td>
+    <td class="diskt-result-v2-0lax">-0.19%</td>
+    <td class="diskt-result-v2-0lax">-0.23%</td>
+  </tr>
+  <tr>
+    <td class="diskt-result-v2-0lax">slepemapy</td>
+    <td class="diskt-result-v2-0lax">0.7632</td>
+    <td class="diskt-result-v2-0lax">0.7250</td>
+    <td class="diskt-result-v2-0lax">0.7249</td>
+    <td class="diskt-result-v2-0lax">0.7269</td>
+    <td class="diskt-result-v2-0lax">0.7258</td>
+    <td class="diskt-result-v2-0lax">3.83%</td>
+    <td class="diskt-result-v2-0lax">-0.20%</td>
+    <td class="diskt-result-v2-0lax">-0.09%</td>
+    <td class="diskt-result-v2-0lax">-0.01%</td>
+  </tr>
+</tbody></table>
+
+此外，我还做了验证性实验：
+<table class="diskt-result-v3"><thead>
+  <tr>
+    <th class="diskt-result-v3-0pky">seq len</th>
+    <th class="diskt-result-v3-0pky">SimpleKT</th>
+    <th class="diskt-result-v3-0pky">SparseKT</th>
+    <th class="diskt-result-v3-0pky">DisKT</th>
+    <th class="diskt-result-v3-0pky">DisKT-fixed</th>
+  </tr></thead>
+<tbody>
+  <tr>
+    <td class="diskt-result-v3-0pky">2</td>
+    <td class="diskt-result-v3-0pky">0.6622</td>
+    <td class="diskt-result-v3-0pky">0.6682</td>
+    <td class="diskt-result-v3-0pky">0.9950</td>
+    <td class="diskt-result-v3-0pky">0.7678</td>
+  </tr>
+  <tr>
+    <td class="diskt-result-v3-0pky">10</td>
+    <td class="diskt-result-v3-0pky">0.6878</td>
+    <td class="diskt-result-v3-0pky">0.6878</td>
+    <td class="diskt-result-v3-0pky">0.8201</td>
+    <td class="diskt-result-v3-0pky">0.6834</td>
+  </tr>
+  <tr>
+    <td class="diskt-result-v3-0pky">50</td>
+    <td class="diskt-result-v3-0pky">0.7382</td>
+    <td class="diskt-result-v3-0pky">0.7457</td>
+    <td class="diskt-result-v3-0pky">0.7933</td>
+    <td class="diskt-result-v3-0pky">0.7409</td>
+  </tr>
+  <tr>
+    <td class="diskt-result-v3-0pky">100</td>
+    <td class="diskt-result-v3-0pky">0.7350</td>
+    <td class="diskt-result-v3-0pky">0.7469</td>
+    <td class="diskt-result-v3-0pky">0.7725</td>
+    <td class="diskt-result-v3-0pky">0.7357</td>
+  </tr>
+  <tr>
+    <td class="diskt-result-v3-0pky">200</td>
+    <td class="diskt-result-v3-0pky">0.7295</td>
+    <td class="diskt-result-v3-0pky">0.7301</td>
+    <td class="diskt-result-v3-0pky">0.7474</td>
+    <td class="diskt-result-v3-0pky">0.7324</td>
+  </tr>
+</tbody></table>
+可以看到，随着在很少量的 seq length 的时候， DisKT 能达到接近 100% 的 TEST AUC，这是明显不合理的。
+
+| setting            | 随机初始化标签 |
+|--------------------|----------------|
+| with early stop    | 56.19%         |
+| without early stop | 100.00%        |
+
+同时测试了随机初始化下带早停和不带早停的情况。
+
 # PyKT的问题准确率[3]
 我在 pykt 做随机标签检测，发现他们的指标也有异常。[PyKT - 关于在随机数据上的训练问题](https://github.com/pykt-team/pykt-toolkit/issues/245)
 
@@ -506,6 +661,36 @@ testauc是pykt提出的在题目级别进行预测（如果我没猜错的话）
 
 .diskt-result td:nth-child(3),
 .diskt-result th:nth-child(3) {
+    background-color: var(--green);
+}
+
+.diskt-result-v2 td:nth-child(2),
+.diskt-result-v2 th:nth-child(2) {
+    background-color: var(--red);
+}
+
+.diskt-result-v2 td:nth-child(3),
+.diskt-result-v2 th:nth-child(3) {
+    background-color: var(--green);
+}
+
+.diskt-result-v2 td:nth-child(4),
+.diskt-result-v2 th:nth-child(4) {
+    background-color: var(--green);
+}
+
+.diskt-result-v2 td:nth-child(7),
+.diskt-result-v2 th:nth-child(7) {
+    background-color: var(--red);
+}
+
+.diskt-result-v3 td:nth-child(4),
+.diskt-result-v3 th:nth-child(4) {
+    background-color: var(--red);
+}
+
+.diskt-result-v3 td:nth-child(5),
+.diskt-result-v3 th:nth-child(5) {
     background-color: var(--green);
 }
 </style>
