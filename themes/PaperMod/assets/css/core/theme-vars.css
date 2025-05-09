@@ -21,6 +21,8 @@
     --hover-press: 1px;      /* Unified press down distance */
     --hover-scale: 1.01;     /* Subtle scale on hover */
     --press-scale: 0.98;     /* Subtle scale on press */
+    --red: #ffebee;   /* 浅红色 */
+    --green: #e8f5e9; /* 浅绿色 */
 }
 
 .dark {
@@ -33,6 +35,8 @@
     --code-block-bg: rgb(46, 46, 51);
     --code-bg: rgb(55, 56, 62);
     --border: rgb(51, 51, 51);
+    --red: #4e2323;   /* 暗色模式下的浅红色 */
+    --green: #233e2b; /* 暗色模式下的浅绿色 */
 }
 
 .list {

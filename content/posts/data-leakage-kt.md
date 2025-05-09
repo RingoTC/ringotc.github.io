@@ -502,11 +502,11 @@ testauc是pykt提出的在题目级别进行预测（如果我没猜错的话）
 <style>
 .diskt-result td:nth-child(2),
 .diskt-result th:nth-child(2) {
-    background-color: #ffeaea;
+    background-color: var(--red);
 }
 
 .diskt-result td:nth-child(3),
 .diskt-result th:nth-child(3) {
-    background-color: #eaffea;
+    background-color: var(--green);
 }
 </style>
