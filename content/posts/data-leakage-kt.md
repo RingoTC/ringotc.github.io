@@ -6,19 +6,19 @@ draft = false
 
 ## RouterKT 的数据泄露
 
-最近完成了一份工作，借鉴 MoE 的思路去正交化 Knowledge Tracing 里的并行化模块，期望是不同的 Attention Head 应当关注到不同的特征，比如有的 Attention Head 应当关注到近期的内容，有的应当关注到远期的内容。
+在最近的一项工作中，我们借鉴了 MoE (Mixture of Experts) 的思路来优化 Knowledge Tracing 任务中的注意力机制。主要思路是让不同的 Attention Head 专注于不同的特征，例如近期和远期的学习行为。
 
-然而现有的很多模型都会给所有的 Attention Head 加同样的 forgetting decay，也就是给注意力机制以各种方式加上距离相关的decay，迫使模型更多关注最近的交互。然而，这可能会损坏模型对其他模式的关注，比如 spacing effects，也就是系统其实是会周期性安排复习的，如果我们更多关注最近的交互，会很容易忽略掉这些模式。
-
-借鉴 MoE 的思路，我们正交化并行的 Multi Head Attention，也就是加上一个路由损失：
-
-如果用 $p_{i,e}$ 表示第 i 个样本被路由到专家 e 的概率，那么负载均衡损失可以表示为：
+目前的主流模型普遍会为所有 Attention Head 添加相同的遗忘衰减(forgetting decay)，这种做法可能会限制模型捕捉其他重要模式的能力，比如间隔效应(spacing effects)。为了解决这个问题，我们引入了路由损失来正交化并行的多头注意力机制：
 
 $$L_{balance} = \alpha \cdot N \sum_{e=1}^E (\frac{1}{N}\sum_{i=1}^N p_{i,e} - \frac{1}{E})^2$$
 
-其中 N 是批次大小，E 是专家数量，α 是权重系数。
+其中:
+- N 是批次大小
+- E 是专家数量
+- α 是权重系数
+- p_{i,e} 表示第 i 个样本被路由到专家 e 的概率
 
-听起来很 work 对不对？
+听起来很合理，对吧？
 
 我的实现如下：
 
@@ -262,13 +262,23 @@ routing_mask = routing_mask.mean(dim=1).unsqueeze(-1).unsqueeze(-1)
 ```
 因为我们期望做 task-level routing[1]。 如果做 token-wise routing，整个序列会被拆散分发到不同的注意力头，注意力头之间就只能通过 FFN 层去交换信息，做 task-level routing， 就可以根据序列全局的特性去路由到合适的注意力头，比如有的头可能更关注重要的题目，有的头可能更关注近期的信息等等。这听起来是不是 motivation 还挺好的。
 
-坏就坏在这个全局路由。我们当前的 Token 是不可以知道未来 Token 的任何信息的，包括它可以被路由到哪个注意力头！所以包含 label 信息的 task-level routing 是不可以被用在自回归任务上的！这里需要改为：
+坏就坏在这个全局路由。我们当前的 Token 是不可以知道未来 Token 的任何信息的，包括它可以被路由到哪个注意力头！如果是只用题目信息去路由还无所谓，但是其实这里的 x 已经是包含了答案信息的。
+
+> x 虽然是一个被掩码的矩阵，但是这个掩码是说，在给定的 timestamp 上，我们无法关注关注到后续的信息
+> 但是如果我们对 x 进行平均池化，会绕过这个掩码机制
+
+
+所以包含 label 信息的 task-level routing 是不可以被用在自回归任务上的！这里需要改为：
 
 ```
 routing_mask = routing_mask.permute(0, 2, 1).unsqueeze(-1)
 ```
 
-当我们把这个部分修正，就只能得到和 AKT 差不多的性能。这里也提示我，一个非常值得注意的点是，自回归任务里平均池化、最大最小池化是非常需要注意的。事实上，我在开始想办法把 MoE 的思想融入知识追踪任务的时候，就在考虑是否存在数据泄露，因为性能提升很大，显得非常异常。自查过几次代码，也询问过 Chadiskt-result-v2PT、Claude、Gemini 等 ChatBot 他们都说没问题...
+或者说修正为只能用题目信息（q_embed_data）去路由。
+
+当我们把这个部分修正，就只能得到和 AKT 差不多的性能。这里也提示我，一个非常值得注意的点是，自回归任务里平均池化、最大最小池化是非常需要注意的。事实上，我在开始想办法把 MoE 的思想融入知识追踪任务的时候，就在考虑是否存在数据泄露，因为性能提升很大，显得非常异常。
+
+自查过几次代码，也询问过 Chadiskt-result-v2PT、Claude、Gemini 等 ChatBot 他们都说没问题...
 
 ![Data Leakage](/rethinking-kt/data-leakage-kt.png)
 
